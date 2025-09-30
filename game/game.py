@@ -113,8 +113,5 @@ def end_game():
     choice = Utils.get_input(1, 2)
 
     match choice:
-        case 1:
-            # Import here to avoid circular import
-            from game.game import launch_game
-            launch_game()
+        case 1: launch_game()
         case 2: sys.exit(0)
