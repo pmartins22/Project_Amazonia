@@ -1,5 +1,6 @@
 import sys
 from time import sleep
+from unittest import case
 
 from game.game_manager import GameManager
 from game.player import Player
@@ -19,7 +20,7 @@ def create_player():
     print("#  Welcome to Player Creation #")
     print()
 
-    name = Utils.get_input_str("Enter your name: ", 8)
+    name = Utils.get_input_str(8, "Enter your name: ")
 
 
     player = Player(name)
@@ -33,7 +34,7 @@ def create_player():
     print()
     Utils.draw_bar(125, "*", corners = "#")
     print()
-    choice = Utils.get_input_int(1, 2)
+    choice = Utils.get_input_int(1, 2, "Enter your choice: ")
 
     class_name = ""
 
@@ -67,18 +68,29 @@ def create_player():
 
 
 def game_loop(game_manager):
-    Utils.clear_terminal()
-    print_game_status(game_manager)
-    print_player_status(game_manager)
-    print_player_inventory(game_manager)
+    while True:
+        Utils.clear_terminal()
+        print_game_status(game_manager)
+        print_player_status(game_manager)
+        print_player_inventory(game_manager)
 
-    Utils.draw_bar(30, "-", corners = "*")
-    print("1 : Eat")
-    print("2 : Sleep")
-    print("3 : Fish")
-    print("4 : Hunt")
-    print("5 : Quit")
-    Utils.draw_bar(30, "-", corners = "*")
+        Utils.draw_bar(30, "-", corners = "*")
+        print("1 : Eat")
+        print("2 : Sleep")
+        print("3 : Fish")
+        print("4 : Hunt")
+        print("5 : Quit")
+        Utils.draw_bar(30, "-", corners = "*")
+        print()
+        choice = Utils.get_input_int(1, 5, "Enter your choice: ")
+
+        match choice:
+            case 1: pass
+            case 2: pass
+            case 3: pass
+            case 4: pass
+            case 5: Utils.clear_terminal(); sys.exit(0)
+
 
 
 def print_game_status(game_manager):
@@ -122,7 +134,7 @@ def end_game():
     print()
     Utils.draw_bar(125, "*", corners = "#")
     print()
-    choice = Utils.get_input_int(1, 2)
+    choice = Utils.get_input_int(1, 2, "Enter your choice: ")
 
     match choice:
         case 1: launch_game()

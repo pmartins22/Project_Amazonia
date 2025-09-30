@@ -8,10 +8,10 @@ class Utils:
         os.system('cls' if os.name == 'nt' else 'clear')
 
     @staticmethod
-    def get_input_int(min, max):
+    def get_input_int(min, max, label = "Enter Int: "):
         lines_to_clear = 1
         while True:
-            ipt = input("Enter choice: ")
+            ipt = input(label)
 
             Utils.clear_lines_above(lines_to_clear)
             lines_to_clear = 2
@@ -29,7 +29,7 @@ class Utils:
             return ipt
 
     @staticmethod
-    def get_input_str(label ,max):
+    def get_input_str(max, label = "Enter Text: "):
         lines_to_clear = 1
 
         while True:
