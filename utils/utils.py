@@ -71,4 +71,12 @@ class Utils:
 
         print(result)
 
+    @staticmethod
+    def format_time(time):
+        hours = int(time)
+        minutes = int((time - hours) * 60)
+        return f"{hours:02d}:{minutes:02d}"
+
+
+
 

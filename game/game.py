@@ -24,8 +24,6 @@ def create_player():
 
     name = Utils.get_input_str(8, "Enter your name: ")
 
-
-    player = Player(name)
     print()
     print("Choose your class:")
     print()
@@ -38,15 +36,18 @@ def create_player():
     print()
     choice = Utils.get_input_int(1, 2, "Enter your choice: ")
 
-    class_name = ""
+    player_class = None
 
     match choice:
         case 1:
-            class_name = "Fisher"
-            Fisher().apply_buff(player)
+            player_class = Fisher()
         case 2:
-            class_name = "Hunter"
-            Hunter().apply_buff(player)
+            player_class = Hunter()
+
+    player = Player(name, player_class)
+    player.player_class.apply_buff(player)
+
+
 
     Utils.clear_terminal()
 
@@ -54,7 +55,7 @@ def create_player():
     print("#  Player Created Successfully #")
     print()
     print("Name: " + player.name)
-    print("Class: " + class_name)
+    print("Class: " + player.player_class.name)
     print()
     Utils.draw_bar(125, "*", corners = "#")
     print()

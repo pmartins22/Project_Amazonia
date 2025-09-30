@@ -2,8 +2,9 @@ from utils.range import Range
 
 
 class Player:
-    def __init__(self, name, hp = 20.0, max_hp = 20.0, hunger = 20.0, max_hunger = 20.0, energy = 16.0, max_energy = 16.0, fish_pull_delay = Range(0.2, 0.9), hunt_success_rate = Range(0.25, 0.35), run_success_rate = Range(0.35, 0.5), fish_amount = 0, meat_amount = 0):
+    def __init__(self, name, player_class, hp = 20.0, max_hp = 20.0, hunger = 20.0, max_hunger = 20.0, energy = 16.0, max_energy = 16.0, fish_pull_delay = Range(0.2, 0.4), hunt_success_rate = Range(0.25, 0.35), run_success_rate = Range(0.35, 0.5), fish_amount = 0, meat_amount = 0):
         self.name = name
+        self.player_class = player_class
         self.hp = hp
         self.max_hp = max_hp
         self.hunger = hunger
@@ -18,10 +19,9 @@ class Player:
 
     def take_damage(self, damage):
         self.hp -= damage
-        if self.hp <= 0:
-            # Import here to avoid circular import
-            from game.game import end_game
-            end_game()
+        if self.hp < 0:
+            self.hp = 0
+
 
     def heal(self, amount):
         self.hp += amount
@@ -33,8 +33,9 @@ class Player:
 
     def take_energy(self, energy):
         self.energy -= energy
-        if self.energy <= 0:
+        if self.energy < 0:
             self.energy = 0
+
 
     def sleep(self, amount):
         self.energy += amount
@@ -46,8 +47,9 @@ class Player:
 
     def take_hunger(self, amount):
         self.hunger -= amount
-        if self.hunger <= 0:
+        if self.hunger < 0:
             self.hunger = 0
+
 
     def eat(self, amount):
         self.hunger += amount

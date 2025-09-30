@@ -1,10 +1,11 @@
 from game.player_class.player_class import PlayerClass
+from utils.range import Range
 
 
 class Hunter(PlayerClass):
-    def apply_buff(self, player):
-        player.hunt_success_rate.min += 0.1
-        player.hunt_success_rate.max += 0.1
+    def __init__(self):
+        super().__init__("Hunter")
 
-        player.run_success_rate.min += 0.1
-        player.run_success_rate.max += 0.1
+    def apply_buff(self, player):
+        player.hunt_success_rate = player.hunt_success_rate.add(Range(0.1, 0.1))
+        player.run_success_rate = player.run_success_rate.add(Range(0.1, 0.1))
