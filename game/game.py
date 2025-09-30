@@ -3,8 +3,8 @@ from time import sleep
 
 from game.game_manager import GameManager
 from game.player import Player
-from player_class.fisher import Fisher
-from player_class.hunter import Hunter
+from game.player_class.fisher import Fisher
+from game.player_class.hunter import Hunter
 from utils.utils import Utils
 
 
@@ -70,6 +70,7 @@ def game_loop(game_manager):
     Utils.clear_terminal()
     print_game_status(game_manager)
     print_player_status(game_manager)
+    print_player_inventory(game_manager)
 
 def print_game_status(game_manager):
     print("* Game Status: --------------------------------------------------------------------------------------------------------*")
@@ -86,7 +87,16 @@ def print_player_status(game_manager):
           "Hunger: " + game_manager.player.format_hunger() + " / " + str(int(game_manager.player.max_hunger)) + "          |          " +
           "Energy: " + game_manager.player.format_energy() + " / " + str(int(game_manager.player.max_energy)))
     print()
-    print("Fishing Average Delay: " + game_manager.player.format_fish_pull_delay() + "       |       " + "Hunt Success Rate: " + game_manager.player.format_hunt_success_rate() + "       |       " + "Run Success Rate: " + game_manager.player.format_run_success_rate())
+    print("Fishing Average Delay: " + game_manager.player.format_fish_pull_delay() + "       |       " +
+          "Hunt Success Rate: " + game_manager.player.format_hunt_success_rate() + "       |       " +
+          "Run Success Rate: " + game_manager.player.format_run_success_rate())
+    print()
+
+def print_player_inventory(game_manager):
+    print("* Player Inventory: ------------------------------------------------------------------------------------------------------*")
+    print()
+    print("                           Fish: " + str(game_manager.player.fish_amount) + "                 |                 " +
+          "Meat: " + str(game_manager.player.meat_amount))
     print()
     print("*---------------------------------------------------------------------------------------------------------------------*")
 
