@@ -15,7 +15,7 @@ def launch_game():
 
 def create_player():
     Utils.clear_terminal()
-    print("#***********************************************************************#")
+    Utils.draw_bar(125, "*", corners = "#")
     print("#  Welcome to Player Creation #")
     print()
 
@@ -26,12 +26,12 @@ def create_player():
     print()
     print("Choose your class:")
     print()
-    print("*------------------------*")
+    Utils.draw_bar(30, "-", corners = "*")
     print("1 : Fisher")
     print("2 : Hunter")
-    print("*------------------------*")
+    Utils.draw_bar(30, "-", corners = "*")
     print()
-    print("#***********************************************************************#")
+    Utils.draw_bar(125, "*", corners = "#")
     print()
     choice = Utils.get_input_int(1, 2)
 
@@ -47,13 +47,13 @@ def create_player():
 
     Utils.clear_terminal()
 
-    print("#***********************************************************************#")
+    Utils.draw_bar(125, "*", corners = "#")
     print("#  Player Created Successfully #")
     print()
     print("Name: " + player.name)
     print("Class: " + class_name)
     print()
-    print("#***********************************************************************#")
+    Utils.draw_bar(125, "*", corners = "#")
     print()
 
     for i in range(5, 0, -1):
@@ -72,8 +72,17 @@ def game_loop(game_manager):
     print_player_status(game_manager)
     print_player_inventory(game_manager)
 
+    Utils.draw_bar(30, "-", corners = "*")
+    print("1 : Eat")
+    print("2 : Sleep")
+    print("3 : Fish")
+    print("4 : Hunt")
+    print("5 : Quit")
+    Utils.draw_bar(30, "-", corners = "*")
+
+
 def print_game_status(game_manager):
-    print("* Game Status: --------------------------------------------------------------------------------------------------------*")
+    Utils.draw_bar(125, "-", "Game Status: ", "*")
     print()
     print("           Time: " + game_manager.format_time() + "       |       " +
           "Day Period: " + game_manager.get_day_period().name + "       |       " +
@@ -81,7 +90,7 @@ def print_game_status(game_manager):
     print()
 
 def print_player_status(game_manager):
-    print("* " + game_manager.player.name + " Status: ------------------------------------------------------------------------------------------------------*")
+    Utils.draw_bar(125, "-", game_manager.player.name + " Status: ", "*")
     print()
     print("           HP: " + game_manager.player.format_hp() + " / " + str(int(game_manager.player.max_hp)) + "          |          " +
           "Hunger: " + game_manager.player.format_hunger() + " / " + str(int(game_manager.player.max_hunger)) + "          |          " +
@@ -93,25 +102,25 @@ def print_player_status(game_manager):
     print()
 
 def print_player_inventory(game_manager):
-    print("* Player Inventory: ------------------------------------------------------------------------------------------------------*")
+    Utils.draw_bar(125, "-", "Player Inventory: ", "*")
     print()
     print("                           Fish: " + str(game_manager.player.fish_amount) + "                 |                 " +
           "Meat: " + str(game_manager.player.meat_amount))
     print()
-    print("*---------------------------------------------------------------------------------------------------------------------*")
+    Utils.draw_bar(125, "-", corners = "*")
 
 
 def end_game():
     Utils.clear_terminal()
-    print("#***********************************************************************#")
+    Utils.draw_bar(125, "*", corners = "#")
     print("YOU DIED! CONTINUE?")
     print()
-    print("*------------------------*")
+    Utils.draw_bar(30, "-", corners = "*")
     print("1 : Continue")
     print("2 : Quit")
-    print("*------------------------*")
+    Utils.draw_bar(30, "-", corners = "*")
     print()
-    print("#***********************************************************************#")
+    Utils.draw_bar(125, "*", corners = "#")
     print()
     choice = Utils.get_input_int(1, 2)
 

@@ -58,3 +58,17 @@ class Utils:
             sys.stdout.write("\033[K")
         sys.stdout.flush()
 
+    @staticmethod
+    def draw_bar(size, tile, label = "", corners = ""):
+        min_size = len(label) + 2 * len(corners)
+        if size < min_size:
+            raise ValueError(f"Size too small! Must be at least {min_size}, got {size}.")
+
+        result = ""
+        result += corners + label
+        result += tile * (size - len(label) - (2*len(corners)))
+        result += corners
+
+        print(result)
+
+
