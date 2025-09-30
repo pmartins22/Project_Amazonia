@@ -19,21 +19,7 @@ def create_player():
     print("#  Welcome to Player Creation #")
     print()
 
-    lines_to_clear = 1
-
-    while True:
-        name = input("Enter your name: ").strip()
-        if not name:
-            Utils.clear_lines_above(lines_to_clear)
-            print("Name cannot be empty. Try again.")
-            lines_to_clear = 2
-            continue
-        if not name.isalpha():
-            Utils.clear_lines_above(lines_to_clear)
-            print("Name must contain only letters. Try again.")
-            lines_to_clear = 2
-            continue
-        break
+    name = Utils.get_input_str("Enter your name: ", 8)
 
 
     player = Player(name)
@@ -46,7 +32,8 @@ def create_player():
     print("*------------------------*")
     print()
     print("#***********************************************************************#")
-    choice = Utils.get_input(1, 2)
+    print()
+    choice = Utils.get_input_int(1, 2)
 
     class_name = ""
 
@@ -85,17 +72,23 @@ def game_loop(game_manager):
     print_player_status(game_manager)
 
 def print_game_status(game_manager):
-    print("*Game Status: --------------------------------------------------------------------------*")
-    print("Time: " + game_manager.format_time() + "       |       " +
+    print("* Game Status: --------------------------------------------------------------------------------------------------------*")
+    print()
+    print("           Time: " + game_manager.format_time() + "       |       " +
           "Day Period: " + game_manager.get_day_period().name + "       |       " +
           "Days Survived: " + str(game_manager.days_survived))
+    print()
 
 def print_player_status(game_manager):
-    print("*" + game_manager.player.name + " Status: ------------------------------------------------------------------------*")
-    print("HP: " + game_manager.player.format_hp() + "       |       " +
-          "Hunger: " + game_manager.player.format_hunger() + "       |       " +
-          "Energy: " + game_manager.player.format_energy())
-    print("*---------------------------------------------------------------------------------------*")
+    print("* " + game_manager.player.name + " Status: ------------------------------------------------------------------------------------------------------*")
+    print()
+    print("           HP: " + game_manager.player.format_hp() + " / " + str(int(game_manager.player.max_hp)) + "          |          " +
+          "Hunger: " + game_manager.player.format_hunger() + " / " + str(int(game_manager.player.max_hunger)) + "          |          " +
+          "Energy: " + game_manager.player.format_energy() + " / " + str(int(game_manager.player.max_energy)))
+    print()
+    print("Fishing Average Delay: " + game_manager.player.format_fish_pull_delay() + "       |       " + "Hunt Success Rate: " + game_manager.player.format_hunt_success_rate() + "       |       " + "Run Success Rate: " + game_manager.player.format_run_success_rate())
+    print()
+    print("*---------------------------------------------------------------------------------------------------------------------*")
 
 
 def end_game():
@@ -110,11 +103,8 @@ def end_game():
     print()
     print("#***********************************************************************#")
     print()
-    choice = Utils.get_input(1, 2)
+    choice = Utils.get_input_int(1, 2)
 
     match choice:
-        case 1:
-            # Import here to avoid circular import
-            from game.game import launch_game
-            launch_game()
+        case 1: launch_game()
         case 2: sys.exit(0)
