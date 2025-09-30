@@ -36,7 +36,7 @@ class Player:
         if self.energy <= 0:
             self.energy = 0
 
-    def rest(self, amount):
+    def sleep(self, amount):
         self.energy += amount
         if self.energy > self.max_energy:
             self.energy = self.max_energy
