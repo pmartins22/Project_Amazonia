@@ -8,13 +8,13 @@ class Utils:
         os.system('cls' if os.name == 'nt' else 'clear')
 
     @staticmethod
-    def get_input(min, max):
+    def get_input_int(min, max, label = "Enter Int: "):
         lines_to_clear = 1
-
         while True:
-            ipt = input("Enter choice: ")
+            ipt = input(label)
 
-            Utils.clear_lines_above(2)
+            Utils.clear_lines_above(lines_to_clear)
+            lines_to_clear = 2
 
             try:
                 ipt = int(ipt)
@@ -29,9 +29,46 @@ class Utils:
             return ipt
 
     @staticmethod
+    def get_input_str(max, label = "Enter Text: "):
+        lines_to_clear = 1
+
+        while True:
+            ipt = input(label).strip()
+            if not ipt:
+                Utils.clear_lines_above(lines_to_clear)
+                print("Input cannot be empty. Try again.")
+                lines_to_clear = 2
+                continue
+            if not ipt.isalpha():
+                Utils.clear_lines_above(lines_to_clear)
+                print("Input must contain only letters. Try again.")
+                lines_to_clear = 2
+                continue
+            if len(ipt) > max:
+                Utils.clear_lines_above(lines_to_clear)
+                print("Input max size is " + str(max) + ". Try again.")
+                lines_to_clear = 2
+                continue
+            return ipt
+
+    @staticmethod
     def clear_lines_above(amount):
         for _ in range(amount):
             sys.stdout.write("\033[F")
             sys.stdout.write("\033[K")
         sys.stdout.flush()
+
+    @staticmethod
+    def draw_bar(size, tile, label = "", corners = ""):
+        min_size = len(label) + 2 * len(corners)
+        if size < min_size:
+            raise ValueError(f"Size too small! Must be at least {min_size}, got {size}.")
+
+        result = ""
+        result += corners + label
+        result += tile * (size - len(label) - (2*len(corners)))
+        result += corners
+
+        print(result)
+
 

@@ -1,4 +1,4 @@
-from player_class.player_class import PlayerClass
+from game.player_class.player_class import PlayerClass
 
 class Fisher(PlayerClass):
     def apply_buff(self, player):
