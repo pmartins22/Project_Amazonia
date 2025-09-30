@@ -1,4 +1,5 @@
 from utils.day_period import DayPeriod
+from utils.utils import Utils
 
 
 class GameManager:
@@ -13,14 +14,48 @@ class GameManager:
             self.days_survived += int(self.time // 24.0)
             self.time = self.time % 24
 
+    def print_game_status(self, under_bar = False):
+        Utils.draw_bar(125, "-", "Game Status: ", "*")
+        print()
+        print("           Time: " + self.format_time() + "       |       " +
+              "Day Period: " + self.get_day_period().name + "       |       " +
+              "Days Survived: " + str(self.days_survived))
+        print()
+        if under_bar: Utils.draw_bar(125, "-", corners="*"); print()
+
+
+    def print_player_status(self, under_bar = False):
+        Utils.draw_bar(125, "-", self.player.name + " Status: ", "*")
+        print()
+        print("           HP: " + self.player.format_hp() + " / " + str(
+            int(self.player.max_hp)) + "          |          " +
+              "Hunger: " + self.player.format_hunger() + " / " + str(
+            int(self.player.max_hunger)) + "          |          " +
+              "Energy: " + self.player.format_energy() + " / " + str(int(self.player.max_energy)))
+        print()
+        print("Fishing Average Delay: " + self.player.format_fish_pull_delay() + "       |       " +
+              "Hunt Success Rate: " + self.player.format_hunt_success_rate() + "       |       " +
+              "Run Success Rate: " + self.player.format_run_success_rate())
+        print()
+        if under_bar: Utils.draw_bar(125, "-", corners="*"); print()
+
+
+
+    def print_player_inventory(self, under_bar = False):
+        Utils.draw_bar(125, "-", "Player Inventory: ", "*")
+        print()
+        print("                           Fish: " + str(
+            self.player.fish_amount) + "                 |                 " +
+              "Meat: " + str(self.player.meat_amount))
+        print()
+        if under_bar: Utils.draw_bar(125, "-", corners="*"); print()
+
+
+
     def format_time(self):
         hours = int(self.time)
         minutes = int((self.time - hours) * 60)
         return f"{hours:02d}:{minutes:02d}"
-
-
-
-
 
 
     def get_day_period(self):

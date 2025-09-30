@@ -2,6 +2,8 @@ import sys
 from time import sleep
 from unittest import case
 
+from ascii_art.animal_ascii import AnimalAscii
+from ascii_art.landscape_ascii import LandScapeAscii
 from game.game_manager import GameManager
 from game.player import Player
 from game.player_class.fisher import Fisher
@@ -70,16 +72,21 @@ def create_player():
 def game_loop(game_manager):
     while True:
         Utils.clear_terminal()
-        print_game_status(game_manager)
-        print_player_status(game_manager)
-        print_player_inventory(game_manager)
+
+        print(LandScapeAscii.FOREST.value)
+        print()
+        game_manager.print_game_status()
+        game_manager.print_player_status()
+        game_manager.print_player_inventory(under_bar=True)
 
         Utils.draw_bar(30, "-", corners = "*")
+        print()
         print("1 : Eat")
         print("2 : Sleep")
         print("3 : Fish")
         print("4 : Hunt")
         print("5 : Quit")
+        print()
         Utils.draw_bar(30, "-", corners = "*")
         print()
         choice = Utils.get_input_int(1, 5, "Enter your choice: ")
@@ -93,33 +100,6 @@ def game_loop(game_manager):
 
 
 
-def print_game_status(game_manager):
-    Utils.draw_bar(125, "-", "Game Status: ", "*")
-    print()
-    print("           Time: " + game_manager.format_time() + "       |       " +
-          "Day Period: " + game_manager.get_day_period().name + "       |       " +
-          "Days Survived: " + str(game_manager.days_survived))
-    print()
-
-def print_player_status(game_manager):
-    Utils.draw_bar(125, "-", game_manager.player.name + " Status: ", "*")
-    print()
-    print("           HP: " + game_manager.player.format_hp() + " / " + str(int(game_manager.player.max_hp)) + "          |          " +
-          "Hunger: " + game_manager.player.format_hunger() + " / " + str(int(game_manager.player.max_hunger)) + "          |          " +
-          "Energy: " + game_manager.player.format_energy() + " / " + str(int(game_manager.player.max_energy)))
-    print()
-    print("Fishing Average Delay: " + game_manager.player.format_fish_pull_delay() + "       |       " +
-          "Hunt Success Rate: " + game_manager.player.format_hunt_success_rate() + "       |       " +
-          "Run Success Rate: " + game_manager.player.format_run_success_rate())
-    print()
-
-def print_player_inventory(game_manager):
-    Utils.draw_bar(125, "-", "Player Inventory: ", "*")
-    print()
-    print("                           Fish: " + str(game_manager.player.fish_amount) + "                 |                 " +
-          "Meat: " + str(game_manager.player.meat_amount))
-    print()
-    Utils.draw_bar(125, "-", corners = "*")
 
 
 def end_game():
