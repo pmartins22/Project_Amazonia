@@ -1,7 +1,5 @@
 import random
 
-from game import game_manager
-
 
 class Range:
     def __init__(self, min, max):
