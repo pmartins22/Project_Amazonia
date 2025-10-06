@@ -38,15 +38,7 @@ def start_sleep(game_manager):
             energy_gain = hours
             game_manager.player.sleep(energy_gain)
 
-            game_manager.pass_time(hours, tax_energy=False)
-
-            hunger_lost = hunger_before - game_manager.player.hunger
-
-            print(f"You just sleep {hours} hours.")
-            sleep(1.5)
-            print(f"Energy gain: +{energy_gain}")
-            sleep(1.5)
-            print(f"Hunger lost: {hunger_lost:.2f}")
+            print(game_manager.pass_time(hours, tax_energy=False))
             sleep(3)
         case 2:
             return

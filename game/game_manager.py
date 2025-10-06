@@ -21,9 +21,9 @@ class GameManager:
         hunger_tax = time * Range(0.45, 0.65).get_random()
         self.player.take_hunger(hunger_tax)
 
-        display = Utils.format_time(self.time) + " have passed: "
+        display = Utils.format_time(time) + " have passed: "
         if tax_energy: display += "\n    * Energy lost: " + str(time)
-        display += " \n    * Hunger tax: " + str(hunger_tax)
+        display += " \n    * Hunger tax: " + str("{:.2f}".format(hunger_tax))
 
         return display
 
