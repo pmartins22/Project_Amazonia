@@ -77,6 +77,15 @@ class Utils:
         minutes = int((time - hours) * 60)
         return f"{hours:02d}:{minutes:02d}"
 
+    @staticmethod
+    def format_float(value, decimals=2):
+        if not isinstance(value, (int, float)):
+            raise TypeError("Value must be a number.")
+        if not isinstance(decimals, int) or decimals < 0:
+            raise ValueError("Decimals must be a non-negative integer.")
+
+        return f"{value:.{decimals}f}"
+
 
 
 
