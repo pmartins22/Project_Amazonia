@@ -5,6 +5,7 @@ from unittest import case
 from ascii_art.animal_ascii import AnimalAscii
 from ascii_art.landscape_ascii import LandScapeAscii
 from game.actions.eat import start_eat
+from game.actions.fish import start_fish
 from game.actions.sleep import start_sleep
 from game.game_manager import GameManager
 from game.player import Player
@@ -99,7 +100,7 @@ def game_loop(game_manager):
         match choice:
             case 1: start_eat(game_manager)
             case 2: start_sleep(game_manager)
-            case 3: pass
+            case 3: start_fish(game_manager)
             case 4: pass
             case 5: Utils.clear_terminal(); sys.exit(0)
 
