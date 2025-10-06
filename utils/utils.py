@@ -8,7 +8,7 @@ class Utils:
         os.system('cls' if os.name == 'nt' else 'clear')
 
     @staticmethod
-    def get_input_int(min, max, label = "Enter Int: "):
+    def get_input_int(min, max, label = "Enter Int: ", out_of_range_msg = "Out of range, try again."):
         lines_to_clear = 1
         while True:
             ipt = input(label)
@@ -23,7 +23,7 @@ class Utils:
                 continue
 
             if ipt < min or ipt > max:
-                print("Out of range, try again.")
+                print(out_of_range_msg)
                 continue
 
             return ipt

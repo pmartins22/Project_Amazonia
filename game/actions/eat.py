@@ -48,10 +48,15 @@ def start_eat(game_manager):
     print("The player is eating...")
     sleep(2)
 
-    game_manager.player.eat(amount * food.nutritional_value)
-    print("I'm full")
+    nutrition = food.nutritional_value.get_random()
+
+    game_manager.player.eat(amount * nutrition)
+
+    if label == "meat": game_manager.player.meat_amount -= amount
+    if label == "fish": game_manager.player.fish_amount -= amount
+
     sleep(0.8)
-    print("Nutritional gain: " + str(amount * food.nutritional_value))
+    print("Nutritional gain: " + str(amount * nutrition))
     sleep(0.8)
     print(game_manager.pass_time(amount * Range(0.25, 0.35).get_random()))
     sleep(3)
