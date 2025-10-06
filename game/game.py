@@ -101,7 +101,8 @@ def game_loop(game_manager):
         match choice:
             case 1: start_eat(game_manager)
             case 2: start_sleep(game_manager)
-            case 3: start_fish(game_manager)
+            case 3:
+                start_fish(game_manager)
             case 4: start_hunt(game_manager)
             case 5: Utils.clear_terminal(); sys.exit(0)
 
