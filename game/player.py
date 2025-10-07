@@ -1,8 +1,9 @@
 from utils.range import Range
+from utils.utils import Utils
 
 
 class Player:
-    def __init__(self, name, player_class, hp = 20.0, max_hp = 20.0, hunger = 20.0, max_hunger = 20.0, energy = 16.0, max_energy = 16.0, fish_pull_delay = Range(0.2, 0.4), hunt_success_rate = Range(0.25, 0.35), run_success_rate = Range(0.35, 0.5), fish_amount = 0, meat_amount = 0):
+    def __init__(self, name, player_class, hp = 20.0, max_hp = 20.0, hunger = 20.0, max_hunger = 20.0, energy = 16.0, max_energy = 16.0, fish_pull_delay = Range(0.2, 0.4), hunt_success_rate = Range(0.25, 0.35), run_success_rate = Range(0.35, 0.5), fish_amount = 10, meat_amount = 0):
         self.name = name
         self.player_class = player_class
         self.hp = hp
@@ -57,14 +58,14 @@ class Player:
             self.hunger = self.max_hunger
 
     def format_hunger(self):
-        return "{:.2f}".format(self.hunger)
+        return Utils.format_float(self.hunger)
 
     def format_fish_pull_delay(self):
-        return "{:.2f}".format(self.fish_pull_delay.get_average()) + "s"
+        return Utils.format_float(self.fish_pull_delay.get_average()) + "s"
 
     def format_hunt_success_rate(self):
-        return "{:.2f}".format(self.hunt_success_rate.get_average() * 100) + "%"
+        return Utils.format_float(self.hunt_success_rate.get_average() * 100) + "%"
 
     def format_run_success_rate(self):
-        return "{:.2f}".format(self.run_success_rate.get_average() * 100) + "%"
+        return Utils.format_float(self.run_success_rate.get_average() * 100) + "%"
 

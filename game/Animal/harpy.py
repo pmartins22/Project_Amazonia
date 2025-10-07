@@ -1,0 +1,6 @@
+from game.Animal.animal import Animal
+from utils.range import Range
+
+class Harpy(Animal):
+    def __init__(self):
+        super().__init__("Harpy", Range(1.5, 2.5), Range(0.1, 0.1), Range(0.2, 0.2), Range(1, 1))

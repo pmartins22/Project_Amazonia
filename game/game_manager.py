@@ -21,9 +21,9 @@ class GameManager:
         hunger_tax = time * Range(0.45, 0.65).get_random()
         self.player.take_hunger(hunger_tax)
 
-        display = Utils.format_time(self.time) + " have passed: "
-        if tax_energy: display += "\n    * Energy lost: " + str(time)
-        display += " \n    * Hunger tax: " + str(hunger_tax)
+        display = Utils.format_time(time) + " have passed: "
+        if tax_energy: display += "\n    * Energy lost: " + Utils.format_float(time)
+        display += " \n    * Hunger tax: " + Utils.format_float(hunger_tax)
 
         return display
 
@@ -34,7 +34,7 @@ class GameManager:
     def print_game_status(self, under_bar = False):
         Utils.draw_bar(125, "-", "Game Status: ", "*")
         print()
-        print("                         Time: " + self.format_time() + "       |       " +
+        print("                         Time: " + self.get_time() + "       |       " +
               "Day Period: " + self.get_day_period().name + "       |       " +
               "Days Survived: " + str(self.days_survived))
         print()
@@ -69,10 +69,8 @@ class GameManager:
 
 
 
-    def format_time(self):
-        hours = int(self.time)
-        minutes = int((self.time - hours) * 60)
-        return f"{hours:02d}:{minutes:02d}"
+    def get_time(self):
+        return Utils.format_time(self.time)
 
 
     def get_day_period(self):

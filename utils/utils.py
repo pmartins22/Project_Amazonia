@@ -8,7 +8,7 @@ class Utils:
         os.system('cls' if os.name == 'nt' else 'clear')
 
     @staticmethod
-    def get_input_int(min, max, label = "Enter Int: "):
+    def get_input_int(min, max, label = "Enter Int: ", out_of_range_msg = "Out of range, try again."):
         lines_to_clear = 1
         while True:
             ipt = input(label)
@@ -23,7 +23,7 @@ class Utils:
                 continue
 
             if ipt < min or ipt > max:
-                print("Out of range, try again.")
+                print(out_of_range_msg)
                 continue
 
             return ipt
@@ -76,6 +76,15 @@ class Utils:
         hours = int(time)
         minutes = int((time - hours) * 60)
         return f"{hours:02d}:{minutes:02d}"
+
+    @staticmethod
+    def format_float(value, decimals=2):
+        if not isinstance(value, (int, float)):
+            raise TypeError("Value must be a number.")
+        if not isinstance(decimals, int) or decimals < 0:
+            raise ValueError("Decimals must be a non-negative integer.")
+
+        return f"{value:.{decimals}f}"
 
 
 
