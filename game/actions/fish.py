@@ -64,7 +64,7 @@ def start_fish(game_manager):
         print()
         sleep(0.8)
         print(game_manager.pass_time(Range(0.80, 1.5).get_random()))
-        sleep(3)
+        sleep(6)
 
 
 
