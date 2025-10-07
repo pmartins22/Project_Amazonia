@@ -1,6 +1,8 @@
 import time
 from time import sleep
 
+from ascii_art.food_ascii import FoodAscii
+from ascii_art.landscape_ascii import LandScapeAscii
 from game import game_manager
 from utils.range import Range
 from utils.utils import Utils
@@ -12,6 +14,8 @@ def start_fish(game_manager):
 
         Utils.clear_terminal()
 
+        print(LandScapeAscii.LAKE.value)
+        print()
         game_manager.print_game_status()
         game_manager.print_player_status()
         game_manager.print_player_inventory(under_bar=True)
@@ -26,7 +30,7 @@ def start_fish(game_manager):
 
         if choice == 2: return
 
-        print("Get ready to fish! Press [SPACE] when the bar turns GREEN.")
+        print("Get ready to fish! Press [SPACE] when the fish shows up.")
         time.sleep(3)
         print()
 
@@ -35,7 +39,6 @@ def start_fish(game_manager):
         start = time.time()
 
         while time.time() - start < duration:
-            print("\r[===== RED =====]", end="", flush=True)
             if keyboard.is_pressed("space"):
                 failed = True
                 break
@@ -46,8 +49,9 @@ def start_fish(game_manager):
         else:
             start = time.time()
             caught = False
+
+            print(FoodAscii.FISH.value)
             while time.time() - start < game_manager.player.fish_pull_delay.get_random():
-                print("\r[===== GREEN =====]", end="", flush=True)
                 if keyboard.is_pressed("space"):
                     game_manager.player.fish_amount += 1
                     caught = True
@@ -57,7 +61,7 @@ def start_fish(game_manager):
                 print()
                 print("You got a fish! New amount: ", game_manager.player.fish_amount)
             else:
-                print("\r[===== RED =====]", flush=True)
+                Utils.clear_lines_above(5)
                 print()
                 print("Too late!")
 

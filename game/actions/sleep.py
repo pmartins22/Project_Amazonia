@@ -1,11 +1,14 @@
 from time import sleep
 
+from ascii_art.general_ascii import GeneralAscii
 from utils.utils import Utils
 
 def start_sleep(game_manager):
     while True:
         Utils.clear_terminal()
 
+        print(GeneralAscii.SLEEP.value)
+        print()
         game_manager.print_game_status()
         game_manager.print_player_status()
         game_manager.print_player_inventory(under_bar=True)

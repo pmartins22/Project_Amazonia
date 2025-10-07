@@ -1,5 +1,7 @@
 from time import sleep
 
+from ascii_art.food_ascii import FoodAscii
+from ascii_art.landscape_ascii import LandScapeAscii
 from game.food.fish import Fish
 from game.food.food import Food
 from game.food.meat import Meat
@@ -29,22 +31,27 @@ def start_eat(game_manager):
 
         food = None
         food_amount = 0
-
+        ascii = ""
 
         match choice:
             case 1:
                 food = Meat()
                 food_amount = game_manager.player.meat_amount
+                ascii = FoodAscii.MEAT.value
 
             case 2:
                 food = Fish()
                 food_amount = game_manager.player.fish_amount
+                ascii = FoodAscii.FISH.value
 
 
         if food_amount <= 0:
             print(f"You don't have any {food.name}.")
             sleep(2)
             continue
+
+        print(ascii)
+        print()
 
         amount = Utils.get_input_int(1, food_amount, "Enter amount: ", out_of_range_msg=f"You don't have that much food (you have {food_amount}).")
 
