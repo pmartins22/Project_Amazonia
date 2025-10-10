@@ -1,5 +1,6 @@
 from time import sleep
 
+from utils.range import Range
 from utils.utils import Utils
 from game.Animal.animal import Animal
 
@@ -41,13 +42,45 @@ def start_hunt(game_manager):
 
             match action:
                 case 1:
-
                     print("You fight the animal!")
                     sleep(2)
+                    prob = Range(0, 1.0).get_random()
+                    if prob <= game_manager.player.hunt_success_rate.get_random():
+                        print("You killed the animal!")
+                        sleep(0.8)
+                        meat_drop = animal.meat_drop.get_random(as_int=True)
+                        game_manager.player.meat_amount += meat_drop
+                        print("You just get: "+ str(meat_drop))
+                        print(game_manager.pass_time(Range(2, 2.7).get_random()))
+                        sleep(6)
+                        return
+                    else:
+                        print("You lose !")
+                        sleep(0.8)
+                        damage = animal.damage.get_random()
+                        game_manager.player.hp -= damage
+                        print("You just lose: "+ str(damage) + " HP")
+                        print(game_manager.pass_time(Range(2, 2.7).get_random()))
+                        sleep(6)
+                        return
                 case 2:
-
                     print("You run away!")
                     sleep(2)
-                    return
+                    prob = Range(0, 1.0).get_random()
+                    if prob <= game_manager.player.run_success_rate.get_random():
+                        print("You escaped successfully !")
+                        sleep(0.8)
+                        print(game_manager.pass_time(Range(0.5, 1.0).get_random()))
+                        sleep(6)
+                        return
+                    else:
+                        print("You couldn't escape!")
+                        sleep(0.8)
+                        damage = animal.damage.get_random()
+                        game_manager.player.hp -= damage
+                        print("You just lose: "+ str(damage) + " HP")
+                        print(game_manager.pass_time(Range(2, 2.7).get_random()))
+                        sleep(6)
+                        return
         case 2:
             return
