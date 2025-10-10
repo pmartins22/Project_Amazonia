@@ -55,19 +55,30 @@ def start_eat(game_manager):
 
         amount = Utils.get_input_int(1, food_amount, "Enter amount: ", out_of_range_msg=f"You don't have that much food (you have {food_amount}).")
 
-        print("The player is eating...")
+        print("You are eating...")
         sleep(2)
+        print()
+
+        print("You finished eating!")
+        sleep(2)
+        print()
 
         nutrition = food.nutritional_value.get_random()
+
+        heal_amount = nutrition * amount * Range(0.85, 0.95).get_random()
+
+        Utils.draw_bar(30, "-", corners="*")
 
         if food.name == "Meat": game_manager.player.meat_amount -= amount
         if food.name == "Fish": game_manager.player.fish_amount -= amount
 
-        sleep(0.8)
-        print()
         print("Nutritional gain: " + Utils.format_float(amount * nutrition))
+        print("HP gain: " + Utils.format_float(heal_amount))
         sleep(0.8)
         print()
-        print(game_manager.pass_time(amount * Range(0.25, 0.35).get_random()))
+
         game_manager.player.eat(amount * nutrition)
+        game_manager.player.heal(heal_amount)
+        print(game_manager.pass_time(amount * Range(0.25, 0.35).get_random(), tax_hunger=False))
+
         sleep(6)

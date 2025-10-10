@@ -9,34 +9,35 @@ class GameManager:
         self.time = time
         self.days_survived = days_survived
 
-    def pass_time(self, time, tax_energy = True):
+    def pass_time(self, time, tax_energy = True, tax_hunger = True):
         self.time += time
         if self.time >= 24.0:
             self.days_survived += int(self.time // 24.0)
             self.time = self.time % 24
 
 
-        if tax_energy: self.player.take_energy(time)
-
-        hunger_tax = time * Range(0.45, 0.65).get_random()
-        self.player.take_hunger(hunger_tax)
-
         tax_energy_hp = False
         energy_hp_tax = time * Range(0.3, 0.4).get_random()
-        tax_hunger_hp = False
-        hunger_hp_tax = time * Range(0.4, 0.45).get_random()
-
         if self.player.energy < self.player.max_energy * 0.2:
             tax_energy_hp = True
-            self.player.hp -= energy_hp_tax
+            self.player.take_damage(energy_hp_tax)
 
+        tax_hunger_hp = False
+        hunger_hp_tax = time * Range(0.4, 0.45).get_random()
         if self.player.hunger < self.player.max_hunger * 0.2:
             tax_hunger_hp = True
-            self.player.hp -= hunger_hp_tax
+            self.player.take_damage(hunger_hp_tax)
+
+        if tax_energy:
+            self.player.take_energy(time)
+
+        hunger_tax = time * Range(0.45, 0.65).get_random()
+        if tax_hunger:
+            self.player.take_hunger(hunger_tax)
 
         display = Utils.format_time(time) + " have passed: "
         if tax_energy: display += "\n    * Energy lost: " + Utils.format_float(time)
-        display += "\n    * Hunger tax: " + Utils.format_float(hunger_tax)
+        if tax_hunger: display += "\n    * Hunger tax: " + Utils.format_float(hunger_tax)
         if tax_energy_hp: display += "\n    * You're tired. HP tax: " + Utils.format_float(energy_hp_tax)
         if tax_hunger_hp: display += "\n    * You're hungry. HP tax: " + Utils.format_float(hunger_hp_tax)
 

@@ -1,6 +1,7 @@
 from time import sleep
 
 from ascii_art.general_ascii import GeneralAscii
+from utils.range import Range
 from utils.utils import Utils
 
 def start_sleep(game_manager):
@@ -30,14 +31,26 @@ def start_sleep(game_manager):
         min_hunger_threshold = game_manager.player.max_hunger * 0.1
 
         if game_manager.player.hunger - estimated_hunger_loss < min_hunger_threshold:
-            print("You are to much hunger for sleep this time! Eat first.")
+            print("You are too hungry to sleep now! Eat first.")
             sleep(2)
-            start_sleep(game_manager)
+            continue
 
         print("You are sleeping...")
         sleep(2)
+        print()
+
+        print("You have woken up!")
+        sleep(2)
+        print()
+
+        heal_amount = hours * Range(0.45, 0.65).get_random()
+
+        print("energy gain: " + str(hours))
+        print("HP gain: " + Utils.format_float(heal_amount))
+        sleep(0.8)
+        print()
 
         game_manager.player.sleep(hours)
-
+        game_manager.player.heal(heal_amount)
         print(game_manager.pass_time(hours, tax_energy=False))
-        sleep(3)
+        sleep(6)
