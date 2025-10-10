@@ -64,10 +64,7 @@ def create_player():
     Utils.draw_bar(125, "*", corners = "#")
     print()
 
-    for i in range(5, 0, -1):
-        print("Game starting in " + str(i) + " seconds...")
-        sleep(1)
-        Utils.clear_lines_above(1)
+    input("Press [ENTER] to continue...")
 
     return player
 

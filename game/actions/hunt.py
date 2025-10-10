@@ -73,7 +73,7 @@ def start_hunt(game_manager):
                             print()
 
                             print(game_manager.pass_time(Range(2, 2.7).get_random()))
-                            sleep(6)
+
                         else:
                             print("You lost!")
                             sleep(2)
@@ -87,7 +87,9 @@ def start_hunt(game_manager):
                             print()
 
                             print(game_manager.pass_time(Range(2, 2.7).get_random()))
-                            sleep(6)
+
+                        print()
+                        input("Press [ENTER] to continue...")
                     case 2:
                         print("You are running from the " + animal.name + "...")
                         sleep(2)
@@ -105,7 +107,7 @@ def start_hunt(game_manager):
                             print()
 
                             print(game_manager.pass_time(Range(1.5, 2.0).get_random()))
-                            sleep(6)
+
                         else:
                             print("You couldn't escape!")
                             sleep(2)
@@ -119,6 +121,8 @@ def start_hunt(game_manager):
                             print()
 
                             print(game_manager.pass_time(Range(2, 2.7).get_random()))
-                            sleep(6)
+
+                        print()
+                        input("Press [ENTER] to continue...")
             case 2:
                 return

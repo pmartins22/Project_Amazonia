@@ -78,5 +78,6 @@ def start_eat(game_manager):
         game_manager.player.eat(amount * nutrition)
         game_manager.player.heal(heal_amount)
         print(game_manager.pass_time(amount * Range(0.25, 0.35).get_random(), tax_hunger=False))
+        print()
 
-        sleep(6)
+        input("Press [ENTER] to continue...")

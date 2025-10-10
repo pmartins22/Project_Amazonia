@@ -55,4 +55,6 @@ def start_sleep(game_manager):
         game_manager.player.sleep(hours)
         game_manager.player.heal(heal_amount)
         print(game_manager.pass_time(hours, tax_energy=False))
-        sleep(6)
+        print()
+
+        input("Press [ENTER] to continue...")

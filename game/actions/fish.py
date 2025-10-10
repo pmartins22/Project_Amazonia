@@ -69,7 +69,9 @@ def start_fish(game_manager):
         print()
         sleep(2)
         print(game_manager.pass_time(Range(0.8, 1.5).get_random()))
-        sleep(6)
+        print()
+
+        input("Press [ENTER] to continue...")
 
 
 
