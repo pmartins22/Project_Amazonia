@@ -42,37 +42,44 @@ def start_hunt(game_manager):
 
             match action:
                 case 1:
-                    print("You fight the animal!")
+                    print("You are fighting the " + animal.name + "...")
                     sleep(2)
+
+                    success_rate = game_manager.player.hunt_success_rate.subtract(animal.hunt_success_rate_tax).get_random()
+                    print("The Success probability is " + Utils.format_float(success_rate * 100, 0) + "%")
+                    sleep(2)
+
                     prob = Range(0, 1.0).get_random()
-                    if prob <= game_manager.player.hunt_success_rate.get_random():
+                    if prob <= success_rate:
                         print("You killed the animal!")
                         sleep(0.8)
                         meat_drop = animal.meat_drop.get_random(as_int=True)
                         game_manager.player.meat_amount += meat_drop
-                        print("You just get: "+ str(meat_drop))
+                        print("You got: "+ str(meat_drop) + "meat!")
                         print(game_manager.pass_time(Range(2, 2.7).get_random()))
                         sleep(6)
-                        return
                     else:
-                        print("You lose !")
+                        print("You lost!")
                         sleep(0.8)
                         damage = animal.damage.get_random()
                         game_manager.player.hp -= damage
                         print("You just lose: "+ str(damage) + " HP")
                         print(game_manager.pass_time(Range(2, 2.7).get_random()))
                         sleep(6)
-                        return
                 case 2:
-                    print("You run away!")
+                    print("You are running from the " + animal.name + "...")
                     sleep(2)
+
+                    success_rate = game_manager.player.run_success_rate.subtract(animal.run_success_rate_tax).get_random()
+                    print("The Success probability is " + Utils.format_float(success_rate * 100, 0) + "%")
+                    sleep(2)
+
                     prob = Range(0, 1.0).get_random()
                     if prob <= game_manager.player.run_success_rate.get_random():
                         print("You escaped successfully !")
                         sleep(0.8)
-                        print(game_manager.pass_time(Range(0.5, 1.0).get_random()))
+                        print(game_manager.pass_time(Range(1.5, 2.0).get_random()))
                         sleep(6)
-                        return
                     else:
                         print("You couldn't escape!")
                         sleep(0.8)
@@ -81,6 +88,5 @@ def start_hunt(game_manager):
                         print("You just lose: "+ str(damage) + " HP")
                         print(game_manager.pass_time(Range(2, 2.7).get_random()))
                         sleep(6)
-                        return
         case 2:
             return
