@@ -5,12 +5,13 @@ from utils.day_period import DayPeriod
 
 
 class Animal(ABC):
-    def __init__(self, name, damage, hunt_success_rate_tax, run_success_rate_tax, meat_drop):
+    def __init__(self, name, damage, hunt_success_rate_tax, run_success_rate_tax, meat_drop, ascii_art):
         self.name = name
         self.damage = damage
         self.hunt_success_rate_tax = hunt_success_rate_tax
         self.run_success_rate_tax = run_success_rate_tax
         self.meat_drop = meat_drop
+        self.ascii_art = ascii_art
 
     @staticmethod
     def get_random(day_period: DayPeriod):
