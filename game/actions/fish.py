@@ -31,6 +31,8 @@ def start_fish(game_manager):
 
         if choice == 2: return
 
+        exp_amount = None
+
         print("Get ready to fish! Press [SPACE] when the fish shows up.")
         time.sleep(2)
         print()
@@ -47,6 +49,8 @@ def start_fish(game_manager):
         if failed:
             print()
             print("Too early!")
+            exp_amount = Range(0.005, 0.008).get_random()
+
         else:
             start = time.time()
             caught = False
@@ -61,13 +65,23 @@ def start_fish(game_manager):
             if caught:
                 print()
                 print("You got a fish! New amount: ", game_manager.player.fish_amount)
+
+                exp_amount = Range(0.02, 0.03).get_random()
             else:
                 Utils.clear_lines_above(5)
                 print()
                 print("Too late!")
+                exp_amount = Range(0.005, 0.008).get_random()
 
-        print()
         sleep(2)
+        print()
+
+        game_manager.player.lvl_up_fish(exp_amount)
+
+        print("EXP gain: " + Utils.format_float(exp_amount, 3))
+        sleep(2)
+        print()
+
         print(game_manager.pass_time(Range(0.8, 1.5).get_random()))
         print()
 
