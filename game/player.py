@@ -57,6 +57,49 @@ class Player:
         if self.hunger > self.max_hunger:
             self.hunger = self.max_hunger
 
+    def lvl_up_fish(self, amount):
+        if self.player_class.name == "Fisher":
+            amount *= Range(1.01, 1.8).get_random()
+
+        range_to_add = Range(0,0)
+
+        prob = Range(1,2).get_random(as_int=True)
+
+        if prob == 1 and self.fish_pull_delay.min + amount < self.fish_pull_delay.max:
+            range_to_add.min += amount
+        else:
+            range_to_add.max += amount
+
+        self.fish_pull_delay = self.fish_pull_delay.add(range_to_add)
+
+    def lvl_up_hunt(self, amount):
+        if self.player_class.name == "Hunter":
+            amount *= Range(1.01, 1.8).get_random()
+
+        range_to_add = Range(0,0)
+
+        prob = Range(1,2).get_random(as_int=True)
+        if prob == 1 and self.hunt_success_rate.min + amount < self.hunt_success_rate.max:
+            range_to_add.min += amount
+        else:
+            range_to_add.max += amount
+
+        self.hunt_success_rate = self.hunt_success_rate.add(range_to_add)
+
+    def lvl_up_run(self, amount):
+        if self.player_class.name == "Hunter":
+            amount *= Range(1.01, 1.8).get_random()
+
+        range_to_add = Range(0, 0)
+
+        prob = Range(1, 2).get_random(as_int=True)
+        if prob == 1 and self.run_success_rate.min + amount < self.run_success_rate.max:
+            range_to_add.min += amount
+        else:
+            range_to_add.max += amount
+
+        self.run_success_rate = self.run_success_rate.add(range_to_add)
+
     def format_hunger(self):
         return Utils.format_float(self.hunger)
 

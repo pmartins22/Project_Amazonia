@@ -10,8 +10,9 @@ class Range:
         return (self.min + self.max) / 2
 
     def get_random(self, as_int=False):
-        value = random.uniform(self.min, self.max)
-        return int(value) if as_int else value
+        if as_int:
+            return random.randint(self.min, self.max)
+        return random.uniform(self.min, self.max)
 
     def subtract(self, other):
         return Range(self.min - other.min, self.max - other.max)
