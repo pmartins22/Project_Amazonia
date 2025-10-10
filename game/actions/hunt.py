@@ -72,6 +72,13 @@ def start_hunt(game_manager):
                             sleep(2)
                             print()
 
+                            exp_amount = Range(0.02, 0.03).get_random()
+                            game_manager.player.lvl_up_hunt(exp_amount)
+
+                            print("EXP gain: " + Utils.format_float(exp_amount, 3))
+                            sleep(2)
+                            print()
+
                             print(game_manager.pass_time(Range(2, 2.7).get_random()))
 
                         else:
@@ -83,6 +90,13 @@ def start_hunt(game_manager):
                             game_manager.player.hp -= damage
 
                             print("HP lost: " + Utils.format_float(damage) + " HP")
+                            sleep(2)
+                            print()
+
+                            exp_amount = Range(0.005, 0.008).get_random()
+                            game_manager.player.lvl_up_hunt(exp_amount)
+
+                            print("EXP gain: " + Utils.format_float(exp_amount, 3))
                             sleep(2)
                             print()
 
@@ -106,6 +120,13 @@ def start_hunt(game_manager):
                             sleep(2)
                             print()
 
+                            exp_amount = Range(0.02, 0.03).get_random()
+                            game_manager.player.lvl_up_run(exp_amount)
+
+                            print("EXP gain: " + Utils.format_float(exp_amount, 3))
+                            sleep(2)
+                            print()
+
                             print(game_manager.pass_time(Range(1.5, 2.0).get_random()))
 
                         else:
@@ -116,7 +137,14 @@ def start_hunt(game_manager):
                             damage = animal.damage.get_random() * 0.5
                             game_manager.player.take_damage(damage)
 
-                            print("You just lost: "+ Utils.format_float(damage) + " HP")
+                            print("HP lost: "+ Utils.format_float(damage) + " HP")
+                            sleep(2)
+                            print()
+
+                            exp_amount = Range(0.005, 0.008).get_random()
+                            game_manager.player.lvl_up_run(exp_amount)
+
+                            print("EXP gain: " + Utils.format_float(exp_amount, 3))
                             sleep(2)
                             print()
 
