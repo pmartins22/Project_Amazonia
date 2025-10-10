@@ -78,11 +78,10 @@ def game_loop(game_manager):
     while True:
         Utils.clear_terminal()
 
-        print(LandScapeAscii.FOREST.value)
-        print()
         game_manager.print_game_status()
         game_manager.print_player_status()
         game_manager.print_player_inventory(under_bar=True)
+        print()
 
         Utils.draw_bar(30, "-", corners = "*")
         print()

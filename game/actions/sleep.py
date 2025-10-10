@@ -8,11 +8,13 @@ def start_sleep(game_manager):
     while True:
         Utils.clear_terminal()
 
-        print(GeneralAscii.SLEEP.value)
-        print()
         game_manager.print_game_status()
         game_manager.print_player_status()
         game_manager.print_player_inventory(under_bar=True)
+        print()
+
+        print(GeneralAscii.SLEEP.value)
+        print()
 
         Utils.draw_bar(30, "-", corners="*")
         print("Do you want to sleep now ?")
@@ -47,7 +49,7 @@ def start_sleep(game_manager):
 
         print("energy gain: " + str(hours))
         print("HP gain: " + Utils.format_float(heal_amount))
-        sleep(0.8)
+        sleep(2)
         print()
 
         game_manager.player.sleep(hours)

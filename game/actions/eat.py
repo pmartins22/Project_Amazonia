@@ -67,14 +67,12 @@ def start_eat(game_manager):
 
         heal_amount = nutrition * amount * Range(0.85, 0.95).get_random()
 
-        Utils.draw_bar(30, "-", corners="*")
-
         if food.name == "Meat": game_manager.player.meat_amount -= amount
         if food.name == "Fish": game_manager.player.fish_amount -= amount
 
         print("Nutritional gain: " + Utils.format_float(amount * nutrition))
         print("HP gain: " + Utils.format_float(heal_amount))
-        sleep(0.8)
+        sleep(2)
         print()
 
         game_manager.player.eat(amount * nutrition)

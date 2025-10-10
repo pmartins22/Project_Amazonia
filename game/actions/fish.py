@@ -11,14 +11,15 @@ import keyboard
 
 def start_fish(game_manager):
     while True:
-
         Utils.clear_terminal()
 
-        print(LandScapeAscii.LAKE.value)
-        print()
         game_manager.print_game_status()
         game_manager.print_player_status()
         game_manager.print_player_inventory(under_bar=True)
+        print()
+
+        print(LandScapeAscii.LAKE.value)
+        print()
 
         Utils.draw_bar(30, "-", corners="*")
         print("Do you want to fish now ?")
