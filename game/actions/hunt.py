@@ -55,7 +55,7 @@ def start_hunt(game_manager):
                         sleep(0.8)
                         meat_drop = animal.meat_drop.get_random(as_int=True)
                         game_manager.player.meat_amount += meat_drop
-                        print("You got: "+ str(meat_drop) + "meat!")
+                        print("You got: " + str(meat_drop) + "meat!")
                         print(game_manager.pass_time(Range(2, 2.7).get_random()))
                         sleep(6)
                     else:
@@ -63,7 +63,7 @@ def start_hunt(game_manager):
                         sleep(0.8)
                         damage = animal.damage.get_random()
                         game_manager.player.hp -= damage
-                        print("You just lose: "+ str(damage) + " HP")
+                        print("You just lost: "+ Utils.format_float(damage) + " HP")
                         print(game_manager.pass_time(Range(2, 2.7).get_random()))
                         sleep(6)
                 case 2:
@@ -85,7 +85,7 @@ def start_hunt(game_manager):
                         sleep(0.8)
                         damage = animal.damage.get_random()
                         game_manager.player.hp -= damage
-                        print("You just lose: "+ str(damage) + " HP")
+                        print("You just lost: "+ Utils.format_float(damage) + " HP")
                         print(game_manager.pass_time(Range(2, 2.7).get_random()))
                         sleep(6)
         case 2:
