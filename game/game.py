@@ -76,6 +76,9 @@ def create_player():
 
 def game_loop(game_manager):
     while True:
+        if game_manager.player.hp <= 0:
+            end_game(game_manager)
+
         Utils.clear_terminal()
 
         game_manager.print_game_status()
@@ -108,7 +111,7 @@ def game_loop(game_manager):
 
 
 
-def end_game():
+def end_game(game_manager):
     Utils.clear_terminal()
     Utils.draw_bar(125, "*", corners = "#")
     print("YOU DIED! CONTINUE?")
@@ -123,5 +126,8 @@ def end_game():
     choice = Utils.get_input_int(1, 2, "Enter your choice: ")
 
     match choice:
-        case 1: launch_game()
+        case 1:
+            new_player = Player(game_manager.player.name, game_manager.player.player_class)
+            new_game_manager = GameManager(new_player)
+            game_loop(new_game_manager)
         case 2: sys.exit(0)
