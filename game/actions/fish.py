@@ -31,7 +31,7 @@ def start_fish(game_manager):
         if choice == 2: return
 
         print("Get ready to fish! Press [SPACE] when the fish shows up.")
-        time.sleep(3)
+        time.sleep(2)
         print()
 
         failed = False
@@ -66,8 +66,8 @@ def start_fish(game_manager):
                 print("Too late!")
 
         print()
-        sleep(0.8)
-        print(game_manager.pass_time(Range(0.80, 1.5).get_random()))
+        sleep(2)
+        print(game_manager.pass_time(Range(0.8, 1.5).get_random()))
         sleep(6)
 
 
