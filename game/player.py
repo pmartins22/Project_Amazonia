@@ -80,9 +80,9 @@ class Player:
 
         prob = Range(1,2).get_random(as_int=True)
         if prob == 1 and self.hunt_success_rate.min + amount < self.hunt_success_rate.max:
-            range_to_add.min += amount
+            if self.hunt_success_rate.min + amount < 1: range_to_add.min += amount
         else:
-            range_to_add.max += amount
+            if self.hunt_success_rate.min + amount < 1: range_to_add.max += amount
 
         self.hunt_success_rate = self.hunt_success_rate.add(range_to_add)
 
@@ -94,9 +94,9 @@ class Player:
 
         prob = Range(1, 2).get_random(as_int=True)
         if prob == 1 and self.run_success_rate.min + amount < self.run_success_rate.max:
-            range_to_add.min += amount
+            if self.run_success_rate.min + amount <= 1: range_to_add.min += amount
         else:
-            range_to_add.max += amount
+            if self.run_success_rate.max + amount <= 1: range_to_add.max += amount
 
         self.run_success_rate = self.run_success_rate.add(range_to_add)
 
