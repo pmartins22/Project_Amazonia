@@ -4,7 +4,8 @@ import os
 from game.game_manager import GameManager
 from game.player import Player
 
-SAVE_FILE = "save_data.json"
+BASE_DIR = os.path.dirname(__file__)
+SAVE_FILE = os.path.join(BASE_DIR, "save_data.json")
 
 def save_game(game_manager):
     if not os.path.exists(SAVE_FILE):
