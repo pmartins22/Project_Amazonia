@@ -55,7 +55,7 @@ def create_player():
     print("#  Welcome to Player Creation #")
     print()
 
-    name = Utils.get_input_str(8, "Enter your name: ")
+    name = Utils.get_input_str(8, "Enter your name: ", invalid_enters=["return"])
 
     print()
     print("Choose your class:")
