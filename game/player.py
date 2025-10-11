@@ -1,3 +1,4 @@
+from game.player_class.player_class import PlayerClass
 from utils.range import Range
 from utils.utils import Utils
 
@@ -115,34 +116,35 @@ class Player:
     def to_dict(self):
         return {
             "name": self.name,
-            "player_class": self.player_class,
+            "player_class": self.player_class.to_dict(),
             "hp": self.hp,
             "max_hp": self.max_hp,
             "hunger": self.hunger,
             "max_hunger": self.max_hunger,
             "energy": self.energy,
             "max_energy": self.max_energy,
-            "fish_pull_delay": self.fish_pull_delay.to_dict() if self.fish_pull_delay else None,
-            "hunt_success_rate": self.hunt_success_rate.to_dict() if self.hunt_success_rate else None,
-            "run_success_rate": self.run_success_rate.to_dict() if self.run_success_rate else None,
+            "fish_pull_delay": self.fish_pull_delay.to_dict(),
+            "hunt_success_rate": self.hunt_success_rate.to_dict(),
+            "run_success_rate": self.run_success_rate.to_dict(),
             "fish_amount": self.fish_amount,
             "meat_amount": self.meat_amount,
         }
 
     @classmethod
     def from_dict(cls, data):
+        from utils.range import Range
         return cls(
             name=data["name"],
-            player_class=data["player_class"],
+            player_class= PlayerClass.from_dict(data["player_class"]),
             hp=data["hp"],
             max_hp=data["max_hp"],
             hunger=data["hunger"],
             max_hunger=data["max_hunger"],
             energy=data["energy"],
             max_energy=data["max_energy"],
-            fish_pull_delay=Range.from_dict(data["fish_pull_delay"]) if data["fish_pull_delay"] else None,
-            hunt_success_rate=Range.from_dict(data["hunt_success_rate"]) if data["hunt_success_rate"] else None,
-            run_success_rate=Range.from_dict(data["run_success_rate"]) if data["run_success_rate"] else None,
+            fish_pull_delay=Range.from_dict(data["fish_pull_delay"]),
+            hunt_success_rate=Range.from_dict(data["hunt_success_rate"]),
+            run_success_rate=Range.from_dict(data["run_success_rate"]),
             fish_amount=data["fish_amount"],
             meat_amount=data["meat_amount"],
         )
