@@ -8,6 +8,7 @@ from game.actions.eat import start_eat
 from game.actions.fish import start_fish
 from game.actions.sleep import start_sleep
 from game.actions.hunt import start_hunt
+from game.data.save import print_player_list, has_save, load_game
 from game.game_manager import GameManager
 from game.player import Player
 from game.player_class.fisher import Fisher
@@ -16,8 +17,34 @@ from utils.utils import Utils
 
 
 def launch_game():
-    player = create_player()
-    game_manager = GameManager(player)
+    Utils.clear_terminal()
+    Utils.draw_bar(125, "*", corners="#")
+    print("#  Welcome to Project Amazonia! #")
+    print()
+    Utils.draw_bar(30, "-", corners="*")
+    print()
+    print("1 : New Game")
+    print("2 : Load Game")
+    print("3 : Quit")
+    print()
+    Utils.draw_bar(30, "-", corners="*")
+    print()
+    Utils.draw_bar(125, "*", corners="#")
+
+    choice = Utils.get_input_int(1, 3, "Enter your choice: ")
+
+    game_manager = None
+
+    match choice:
+        case 1:
+            player = create_player()
+            game_manager = GameManager(player)
+        case 2:
+            game_manager = load_game_choice()
+        case 3:
+            sys.exit(0)
+
+
     game_loop(game_manager)
 
 def create_player():
@@ -67,6 +94,36 @@ def create_player():
     input("Press [ENTER] to continue...")
 
     return player
+
+def load_game_choice():
+    while True:
+        Utils.draw_bar(125, "*", corners="#")
+        print("#  What game do you want to load? #")
+        print()
+
+        Utils.draw_bar(30, "-",label="Saved Players List" , corners="*")
+        print()
+        print_player_list()
+        print()
+        Utils.draw_bar(30, "-", corners="*")
+        print()
+
+        Utils.draw_bar(125, "*", corners="#")
+        print()
+
+        name = Utils.get_input_str(8, """Enter player name ("return" to go back): """)
+
+        if name == "return": launch_game()
+
+        if has_save(name):
+            print("Game loaded successfully!")
+            sleep(2)
+            return load_game(name)
+        else:
+            print("No game saved on this name! Try again.")
+            sleep(2)
+
+
 
 
 
