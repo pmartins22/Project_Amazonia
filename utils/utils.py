@@ -29,7 +29,10 @@ class Utils:
             return ipt
 
     @staticmethod
-    def get_input_str(max, label = "Enter Text: "):
+    def get_input_str(max, label = "Enter Text: ", invalid_enters = []):
+        if not isinstance(invalid_enters, list) or not all(isinstance(i, str) for i in invalid_enters):
+            raise TypeError("invalid_enters must be a list of strings")
+
         lines_to_clear = 1
 
         while True:
@@ -47,6 +50,11 @@ class Utils:
             if len(ipt) > max:
                 Utils.clear_lines_above(lines_to_clear)
                 print("Input max size is " + str(max) + ". Try again.")
+                lines_to_clear = 2
+                continue
+            if ipt in invalid_enters:
+                Utils.clear_lines_above(lines_to_clear)
+                print("Input is invalid. Try again.")
                 lines_to_clear = 2
                 continue
             return ipt
