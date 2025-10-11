@@ -35,3 +35,26 @@ def load_game(player_name):
 
 
     raise ValueError(f"No save found for '{player_name}'")
+
+def has_save(player_name):
+    if not os.path.exists(SAVE_FILE):
+        raise FileNotFoundError("SAVE_FILE not found.")
+
+    with open(SAVE_FILE, "r") as f:
+        saves = json.load(f)
+
+    for s in saves:
+        if s["player"]["name"] == player_name:
+            return True
+
+    return False
+
+def print_player_list():
+    if not os.path.exists(SAVE_FILE):
+        raise FileNotFoundError("SAVE_FILE not found.")
+
+    with open(SAVE_FILE, "r") as f:
+        saves = json.load(f)
+
+    for s in saves:
+        print(s["player"]["name"])
