@@ -112,3 +112,38 @@ class Player:
     def format_run_success_rate(self):
         return Utils.format_float(self.run_success_rate.get_average() * 100) + "%"
 
+    def to_dict(self):
+        return {
+            "name": self.name,
+            "player_class": self.player_class,
+            "hp": self.hp,
+            "max_hp": self.max_hp,
+            "hunger": self.hunger,
+            "max_hunger": self.max_hunger,
+            "energy": self.energy,
+            "max_energy": self.max_energy,
+            "fish_pull_delay": self.fish_pull_delay.to_dict() if self.fish_pull_delay else None,
+            "hunt_success_rate": self.hunt_success_rate.to_dict() if self.hunt_success_rate else None,
+            "run_success_rate": self.run_success_rate.to_dict() if self.run_success_rate else None,
+            "fish_amount": self.fish_amount,
+            "meat_amount": self.meat_amount,
+        }
+
+    @classmethod
+    def from_dict(cls, data):
+        return cls(
+            name=data["name"],
+            player_class=data["player_class"],
+            hp=data["hp"],
+            max_hp=data["max_hp"],
+            hunger=data["hunger"],
+            max_hunger=data["max_hunger"],
+            energy=data["energy"],
+            max_energy=data["max_energy"],
+            fish_pull_delay=Range.from_dict(data["fish_pull_delay"]) if data["fish_pull_delay"] else None,
+            hunt_success_rate=Range.from_dict(data["hunt_success_rate"]) if data["hunt_success_rate"] else None,
+            run_success_rate=Range.from_dict(data["run_success_rate"]) if data["run_success_rate"] else None,
+            fish_amount=data["fish_amount"],
+            meat_amount=data["meat_amount"],
+        )
+

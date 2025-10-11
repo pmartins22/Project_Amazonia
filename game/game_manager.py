@@ -1,3 +1,4 @@
+from game.player import Player
 from utils.day_period import DayPeriod
 from utils.range import Range
 from utils.utils import Utils
@@ -98,3 +99,15 @@ class GameManager:
             return DayPeriod.AFTERNOON
         elif self.time >= 18 and self.time < 24:
             return DayPeriod.NIGHT
+
+    def to_dict(self):
+        return {
+            "player": self.player.to_dict(),
+            "time": self.time,
+            "days_survived": self.days_survived,
+        }
+
+    @classmethod
+    def from_dict(cls, data):
+        player = Player.from_dict(data["player"])
+        return cls(player=player, time=data["time"], days_survived=data["days_survived"])

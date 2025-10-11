@@ -19,3 +19,10 @@ class Range:
 
     def add(self, other):
         return Range(self.min + other.min, self.max + other.max)
+
+    def to_dict(self):
+        return {"min": self.min, "max": self.max}
+
+    @classmethod
+    def from_dict(cls, data):
+        return cls(data["min"], data["max"])
