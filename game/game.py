@@ -8,7 +8,7 @@ from game.actions.eat import start_eat
 from game.actions.fish import start_fish
 from game.actions.sleep import start_sleep
 from game.actions.hunt import start_hunt
-from game.data.save import print_player_list, has_save, load_game
+from game.data.save import print_player_list, has_save, load_game, save_game
 from game.game_manager import GameManager
 from game.player import Player
 from game.player_class.fisher import Fisher
@@ -146,11 +146,13 @@ def game_loop(game_manager):
         print("2 : Sleep")
         print("3 : Fish")
         print("4 : Hunt")
-        print("5 : Quit")
+        print()
+        print("5 : Save Game")
+        print("6 : Quit")
         print()
         Utils.draw_bar(30, "-", corners = "*")
         print()
-        choice = Utils.get_input_int(1, 5, "Enter your choice: ")
+        choice = Utils.get_input_int(1, 6, "Enter your choice: ")
 
         Utils.clear_terminal()
 
@@ -159,7 +161,11 @@ def game_loop(game_manager):
             case 2: start_sleep(game_manager)
             case 3: start_fish(game_manager)
             case 4: start_hunt(game_manager)
-            case 5: Utils.clear_terminal(); sys.exit(0)
+            case 5:
+                save_game(game_manager)
+                print("Game saved successfully!")
+                sleep(2)
+            case 6: Utils.clear_terminal(); sys.exit(0)
 
 
 
