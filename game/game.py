@@ -30,6 +30,7 @@ def launch_game():
     Utils.draw_bar(30, "-", corners="*")
     print()
     Utils.draw_bar(125, "*", corners="#")
+    print()
 
     choice = Utils.get_input_int(1, 3, "Enter your choice: ")
 
@@ -42,6 +43,7 @@ def launch_game():
         case 2:
             game_manager = load_game_choice()
         case 3:
+            Utils.clear_terminal()
             sys.exit(0)
 
 
@@ -97,11 +99,12 @@ def create_player():
 
 def load_game_choice():
     while True:
+        Utils.clear_terminal()
         Utils.draw_bar(125, "*", corners="#")
         print("#  What game do you want to load? #")
         print()
 
-        Utils.draw_bar(30, "-",label="Saved Players List" , corners="*")
+        Utils.draw_bar(30, "-",label=" Saved Players List " , corners="*")
         print()
         print_player_list()
         print()
@@ -112,6 +115,7 @@ def load_game_choice():
         print()
 
         name = Utils.get_input_str(8, """Enter player name ("return" to go back): """)
+        print()
 
         if name == "return": launch_game()
 
@@ -142,6 +146,7 @@ def game_loop(game_manager):
 
         Utils.draw_bar(30, "-", corners = "*")
         print()
+
         print("1 : Eat")
         print("2 : Sleep")
         print("3 : Fish")
@@ -150,11 +155,12 @@ def game_loop(game_manager):
         print("5 : Save Game")
         print("6 : Quit")
         print()
+
         Utils.draw_bar(30, "-", corners = "*")
         print()
-        choice = Utils.get_input_int(1, 6, "Enter your choice: ")
 
-        Utils.clear_terminal()
+        choice = Utils.get_input_int(1, 6, "Enter your choice: ")
+        print()
 
         match choice:
             case 1: start_eat(game_manager)
