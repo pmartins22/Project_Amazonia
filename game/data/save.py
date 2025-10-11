@@ -12,7 +12,15 @@ def save_game(game_manager):
         raise FileNotFoundError("SAVE_FILE not found.")
 
     with open(SAVE_FILE, "r") as f:
-        saves = json.load(f)
+        content = f.read().strip()
+        if content:
+            try:
+                saves = json.loads(content)
+            except json.JSONDecodeError:
+                raise ValueError("JSON file is corrupt.")
+
+        else:
+            saves = []
 
     player_name = game_manager.player.name
 
@@ -28,7 +36,15 @@ def load_game(player_name):
         raise FileNotFoundError("SAVE_FILE not found.")
 
     with open(SAVE_FILE, "r") as f:
-        saves = json.load(f)
+        content = f.read().strip()
+        if content:
+            try:
+                saves = json.loads(content)
+            except json.JSONDecodeError:
+                raise ValueError("JSON file is corrupt.")
+
+        else:
+            saves = []
 
     for s in saves:
         if s["player"]["name"] == player_name:
@@ -42,7 +58,14 @@ def has_save(player_name):
         raise FileNotFoundError("SAVE_FILE not found.")
 
     with open(SAVE_FILE, "r") as f:
-        saves = json.load(f)
+        content = f.read().strip()
+        if content:
+            try:
+                saves = json.loads(content)
+            except json.JSONDecodeError:
+                raise ValueError("JSON file is corrupt.")
+
+        else: saves = []
 
     for s in saves:
         if s["player"]["name"] == player_name:
@@ -55,7 +78,18 @@ def print_player_list():
         raise FileNotFoundError("SAVE_FILE not found.")
 
     with open(SAVE_FILE, "r") as f:
-        saves = json.load(f)
+        content = f.read().strip()
+        if content:
+            try:
+                saves = json.loads(content)
+            except json.JSONDecodeError:
+                raise ValueError("JSON file is corrupt.")
 
+        else:
+            saves = []
+
+    if len(saves) == 0:
+        print("No saves found...")
+        return
     for s in saves:
         print(s["player"]["name"])
