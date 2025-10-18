@@ -49,7 +49,7 @@ def start_fish(game_manager):
         if failed:
             print()
             print("Too early!")
-            exp_amount = Range(0.005, 0.008).get_random()
+            exp_amount = Range(0.002, 0.005).get_random()
 
         else:
             start = time.time()
@@ -66,12 +66,12 @@ def start_fish(game_manager):
                 print()
                 print("You got a fish! New amount: ", game_manager.player.fish_amount)
 
-                exp_amount = Range(0.02, 0.03).get_random()
+                exp_amount = Range(0.008, 0.012).get_random()
             else:
                 Utils.clear_lines_above(5)
                 print()
                 print("Too late!")
-                exp_amount = Range(0.005, 0.008).get_random()
+                exp_amount = Range(0.002, 0.005).get_random()
 
         sleep(2)
         print()

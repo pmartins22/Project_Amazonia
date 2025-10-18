@@ -72,7 +72,7 @@ def start_hunt(game_manager):
                             sleep(2)
                             print()
 
-                            exp_amount = Range(0.02, 0.03).get_random()
+                            exp_amount = Range(0.008, 0.012).get_random()
                             game_manager.player.lvl_up_hunt(exp_amount)
 
                             print("EXP gain: " + Utils.format_float(exp_amount, 3))
@@ -93,7 +93,7 @@ def start_hunt(game_manager):
                             sleep(2)
                             print()
 
-                            exp_amount = Range(0.005, 0.008).get_random()
+                            exp_amount = Range(0.002, 0.005).get_random()
                             game_manager.player.lvl_up_hunt(exp_amount)
 
                             print("EXP gain: " + Utils.format_float(exp_amount, 3))
@@ -120,7 +120,7 @@ def start_hunt(game_manager):
                             sleep(2)
                             print()
 
-                            exp_amount = Range(0.02, 0.03).get_random()
+                            exp_amount = Range(0.008, 0.012).get_random()
                             game_manager.player.lvl_up_run(exp_amount)
 
                             print("EXP gain: " + Utils.format_float(exp_amount, 3))
@@ -141,7 +141,7 @@ def start_hunt(game_manager):
                             sleep(2)
                             print()
 
-                            exp_amount = Range(0.005, 0.008).get_random()
+                            exp_amount = Range(0.002, 0.005).get_random()
                             game_manager.player.lvl_up_run(exp_amount)
 
                             print("EXP gain: " + Utils.format_float(exp_amount, 3))
