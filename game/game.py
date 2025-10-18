@@ -192,11 +192,11 @@ def game_loop(game_manager):
 def end_game(game_manager):
     Utils.clear_terminal()
     Utils.draw_bar(125, "*", corners = "#")
-    print("YOU DIED! CONTINUE?")
+    print("YOU DIED!")
     print()
     Utils.draw_bar(30, "-", corners = "*")
-    print("1 : Continue")
-    print("2 : Quit")
+    print("1 : Load Game")
+    print("2 : Return to Menu")
     Utils.draw_bar(30, "-", corners = "*")
     print()
     Utils.draw_bar(125, "*", corners = "#")
@@ -205,7 +205,6 @@ def end_game(game_manager):
 
     match choice:
         case 1:
-            new_player = Player(game_manager.player.name, game_manager.player.player_class)
-            new_game_manager = GameManager(new_player)
-            game_loop(new_game_manager)
-        case 2: sys.exit(0)
+            game_manager = load_game_choice()
+            game_loop(game_manager)
+        case 2: launch_game()
