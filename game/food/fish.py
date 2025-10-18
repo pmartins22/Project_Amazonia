@@ -4,4 +4,4 @@ from utils.range import Range
 
 class Fish(Food):
     def __init__(self):
-        super().__init__("Fish", Range(0.8, 1.2))
+        super().__init__("Fish", Range(0.8, 1.5))
