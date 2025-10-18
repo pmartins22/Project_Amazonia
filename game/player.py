@@ -4,7 +4,7 @@ from utils.utils import Utils
 
 
 class Player:
-    def __init__(self, name, player_class, hp = 20.0, max_hp = 20.0, hunger = 20.0, max_hunger = 20.0, energy = 16.0, max_energy = 16.0, fish_pull_delay = Range(0.2, 0.4), hunt_success_rate = Range(0.25, 0.35), run_success_rate = Range(0.35, 0.5), fish_amount = 0, meat_amount = 0):
+    def __init__(self, name, player_class, hp = 20.0, max_hp = 20.0, hunger = 20.0, max_hunger = 20.0, energy = 16.0, max_energy = 16.0, fish_pull_delay = Range(0.3, 0.4), hunt_success_rate = Range(0.3, 0.4), run_success_rate = Range(0.35, 0.5), fish_amount = 0, meat_amount = 0):
         self.name = name
         self.player_class = player_class
         self.hp = hp
