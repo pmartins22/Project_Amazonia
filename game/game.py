@@ -153,7 +153,7 @@ def game_loop(game_manager):
         print("4 : Hunt")
         print()
         print("5 : Save Game")
-        print("6 : Quit")
+        print("6 : Return to Menu")
         print()
 
         Utils.draw_bar(30, "-", corners = "*")
@@ -171,7 +171,19 @@ def game_loop(game_manager):
                 save_game(game_manager)
                 print("Game saved successfully!")
                 sleep(2)
-            case 6: Utils.clear_terminal(); sys.exit(0)
+            case 6:
+                print("Unsaved progress will be lost, are you sure?")
+                print()
+                Utils.draw_bar(20, "-", corners="*")
+                print("1 : Yes")
+                print("2 : No")
+                Utils.draw_bar(20, "-", corners="*")
+                print()
+
+                choice = Utils.get_input_int(1, 2, "Enter your choice: ")
+                match choice:
+                    case 1: launch_game()
+                    case 2: break
 
 
 
