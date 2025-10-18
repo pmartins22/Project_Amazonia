@@ -3,6 +3,7 @@ from time import sleep
 from unittest import case
 
 from ascii_art.animal_ascii import AnimalAscii
+from ascii_art.general_ascii import GeneralAscii
 from ascii_art.landscape_ascii import LandScapeAscii
 from game.actions.eat import start_eat
 from game.actions.fish import start_fish
@@ -192,6 +193,8 @@ def game_loop(game_manager):
 def end_game(game_manager):
     Utils.clear_terminal()
     Utils.draw_bar(125, "*", corners = "#")
+    print(GeneralAscii.DEATH.value)
+    print()
     print("YOU DIED!")
     print()
     Utils.draw_bar(30, "-", corners = "*")
