@@ -54,17 +54,23 @@ def start_fish(game_manager):
         else:
             start = time.time()
             caught = False
+            fish_to_add = 1
 
             print(FoodAscii.FISH.value)
             while time.time() - start < game_manager.player.fish_pull_delay.get_random():
                 if keyboard.is_pressed("space"):
-                    game_manager.player.fish_amount += 1
+                    if game_manager.player.player_class.name == "Fisher":
+                        prob = Range(0, 1).get_random()
+                        if prob < 0.075:
+                            fish_to_add = 2
+
+                    game_manager.player.fish_amount += fish_to_add
                     caught = True
                     break
 
             if caught:
                 print()
-                print("You got a fish! New amount: ", game_manager.player.fish_amount)
+                print("You got " + str(fish_to_add) + " fish! New amount: ", game_manager.player.fish_amount)
 
                 exp_amount = Range(0.008, 0.012).get_random()
             else:
