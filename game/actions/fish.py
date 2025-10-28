@@ -3,14 +3,17 @@ from time import sleep
 
 from ascii_art.food_ascii import FoodAscii
 from ascii_art.landscape_ascii import LandScapeAscii
-from game import game_manager
+from game.game_manager import GameManager
 from utils.range import Range
 from utils.utils import Utils
 import keyboard
 
 
 def start_fish(game_manager):
-    while True:
+    if not isinstance(game_manager, GameManager):
+        raise TypeError("game_manager must be an instance of GameManager")
+
+    try:
         Utils.clear_terminal()
 
         game_manager.print_game_status()
@@ -27,11 +30,12 @@ def start_fish(game_manager):
         print("1 : Yes")
         print("2 : Not yet !")
         Utils.draw_bar(30, "-", corners="*")
+        print()
+
         choice = Utils.get_input_int(1, 2, "Enter your choice: ")
 
-        if choice == 2: return
-
-        exp_amount = None
+        if choice == 2:
+            return
 
         print("Get ready to fish! Press [SPACE] when the fish shows up.")
         time.sleep(2)
@@ -50,13 +54,13 @@ def start_fish(game_manager):
             print()
             print("Too early!")
             exp_amount = Range(0.002, 0.005).get_random()
-
         else:
             start = time.time()
             caught = False
             fish_to_add = 1
 
             print(FoodAscii.FISH.value)
+
             while time.time() - start < game_manager.player.fish_pull_delay.get_random():
                 if keyboard.is_pressed("space"):
                     if game_manager.player.player_class.name == "Fisher":
@@ -70,8 +74,7 @@ def start_fish(game_manager):
 
             if caught:
                 print()
-                print("You got " + str(fish_to_add) + " fish! New amount: ", game_manager.player.fish_amount)
-
+                print(f"You got {fish_to_add} fish! New amount: {game_manager.player.fish_amount}")
                 exp_amount = Range(0.008, 0.012).get_random()
             else:
                 Utils.clear_lines_above(5)
@@ -84,7 +87,7 @@ def start_fish(game_manager):
 
         game_manager.player.lvl_up_fish(exp_amount)
 
-        print("EXP gain: " + Utils.format_float(exp_amount, 3))
+        print(f"EXP gain: {Utils.format_float(exp_amount, 3)}")
         sleep(2)
         print()
 
@@ -92,6 +95,12 @@ def start_fish(game_manager):
         print()
 
         input("Press [ENTER] to continue...")
-
-
-
+    except KeyboardInterrupt:
+        print("\nFishing interrupted.")
+        sleep(1)
+    except (ValueError, TypeError, AttributeError) as e:
+        print(f"Error during fishing action: {str(e)}")
+        sleep(2)
+    except Exception as e:
+        print(f"Unexpected error: {str(e)}")
+        sleep(2)
