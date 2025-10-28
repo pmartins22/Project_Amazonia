@@ -76,9 +76,9 @@ class Player:
         prob = Range(1, 2).get_random(as_int=True)
 
         if prob == 1 and self.fish_pull_delay.min + amount < self.fish_pull_delay.max:
-            self.fish_pull_delay = self.fish_pull_delay.add(Range(amount, 0))
+            self.fish_pull_delay.min += amount
         else:
-            self.fish_pull_delay = self.fish_pull_delay.add(Range(0, amount))
+            self.fish_pull_delay.max += amount
 
     def lvl_up_hunt(self, amount):
         if not isinstance(amount, (int, float)) or amount < 0:
@@ -91,10 +91,10 @@ class Player:
 
         if prob == 1 and self.hunt_success_rate.min + amount < self.hunt_success_rate.max:
             if self.hunt_success_rate.min + amount < 1:
-                self.hunt_success_rate = self.hunt_success_rate.add(Range(amount, 0))
+                self.hunt_success_rate.min += amount
         else:
             if self.hunt_success_rate.max + amount < 1:
-                self.hunt_success_rate = self.hunt_success_rate.add(Range(0, amount))
+                self.hunt_success_rate.max += amount
 
     def lvl_up_run(self, amount):
         if not isinstance(amount, (int, float)) or amount < 0:
@@ -107,10 +107,10 @@ class Player:
 
         if prob == 1 and self.run_success_rate.min + amount < self.run_success_rate.max:
             if self.run_success_rate.min + amount <= 1:
-                self.run_success_rate = self.run_success_rate.add(Range(amount, 0))
+                self.run_success_rate.min += amount
         else:
             if self.run_success_rate.max + amount <= 1:
-                self.run_success_rate = self.run_success_rate.add(Range(0, amount))
+                self.run_success_rate.max += amount
 
     def format_hunger(self):
         return Utils.format_float(self.hunger)
