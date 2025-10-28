@@ -3,6 +3,8 @@ import random
 
 class Range:
     def __init__(self, min, max):
+        if min > max:
+            raise ValueError(f"min ({min}) must not be bigger than max ({max})")
         self.min = min
         self.max = max
 
@@ -25,4 +27,6 @@ class Range:
 
     @classmethod
     def from_dict(cls, data):
+        if "min" not in data or "max" not in data:
+            raise KeyError("Dictionary must contain 'min' and 'max'")
         return cls(data["min"], data["max"])
