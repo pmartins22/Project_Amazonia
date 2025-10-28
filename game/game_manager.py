@@ -71,7 +71,7 @@ class GameManager:
             print()
 
     def print_player_status(self, under_bar=False):
-        Utils.draw_bar(125, "-", f"{self.player.name} Status: ", "*")
+        Utils.draw_bar(125, "-", f"{self.player.name} ({self.player.player_class.name}) Status: ", "*")
         print()
         print(f"               HP: {self.player.format_hp()} / {int(self.player.max_hp)}          |          "
               f"Hunger: {self.player.format_hunger()} / {int(self.player.max_hunger)}           |          "
