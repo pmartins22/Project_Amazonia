@@ -6,6 +6,19 @@ from utils.day_period import DayPeriod
 
 class Animal(ABC):
     def __init__(self, name, damage, hunt_success_rate_tax, run_success_rate_tax, meat_drop, ascii_art):
+        if not isinstance(name, str) or not name.strip():
+            raise ValueError("name must be a non-empty string")
+        if not isinstance(damage, Range):
+            raise TypeError("damage must be a Range object")
+        if not isinstance(hunt_success_rate_tax, Range):
+            raise TypeError("hunt_success_rate_tax must be a Range object")
+        if not isinstance(run_success_rate_tax, Range):
+            raise TypeError("run_success_rate_tax must be a Range object")
+        if not isinstance(meat_drop, Range):
+            raise TypeError("meat_drop must be a Range object")
+        if not isinstance(ascii_art, str):
+            raise TypeError("ascii_art must be a string")
+
         self.name = name
         self.damage = damage
         self.hunt_success_rate_tax = hunt_success_rate_tax
@@ -15,6 +28,8 @@ class Animal(ABC):
 
     @staticmethod
     def get_random(day_period: DayPeriod):
+        if not isinstance(day_period, DayPeriod):
+            raise TypeError("day_period must be a DayPeriod enum")
 
         from game.Animal.jaguar import Jaguar
         from game.Animal.caiman import Caiman
@@ -29,14 +44,14 @@ class Animal(ABC):
         }
 
         current_probs = probabilities[day_period]
-
         prob = Range(0, 1.0).get_random()
 
-        if prob <= current_probs[0]:
-            return Jaguar()
-        if prob <= current_probs[0] + current_probs[1]:
-            return Caiman()
-        if prob <= current_probs[0] + current_probs[1] + current_probs[2]:
-            return Anaconda()
-        return Harpy()
+        cumulative = 0
+        animals = [Jaguar, Caiman, Anaconda, Harpy]
 
+        for i, animal_prob in enumerate(current_probs):
+            cumulative += animal_prob
+            if prob <= cumulative:
+                return animals[i]()
+
+        return Harpy()
