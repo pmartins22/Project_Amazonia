@@ -4,7 +4,18 @@ from utils.utils import Utils
 
 
 class Player:
-    def __init__(self, name, player_class, hp = 20.0, max_hp = 20.0, hunger = 20.0, max_hunger = 20.0, energy = 16.0, max_energy = 16.0, fish_pull_delay = Range(0.3, 0.4), hunt_success_rate = Range(0.3, 0.4), run_success_rate = Range(0.35, 0.5), fish_amount = 0, meat_amount = 0):
+    def __init__(self, name, player_class, hp=20.0, max_hp=20.0, hunger=20.0, max_hunger=20.0, energy=16.0,
+                 max_energy=16.0, fish_pull_delay=Range(0.3, 0.4), hunt_success_rate=Range(0.3, 0.4),
+                 run_success_rate=Range(0.35, 0.5), fish_amount=0, meat_amount=0):
+        if not isinstance(name, str) or not name.strip():
+            raise ValueError("Name must be a non-empty string")
+        if hp > max_hp or hp < 0:
+            raise ValueError(f"HP ({hp}) must be between 0 and max_hp ({max_hp})")
+        if hunger > max_hunger or hunger < 0:
+            raise ValueError(f"Hunger ({hunger}) must be between 0 and max_hunger ({max_hunger})")
+        if energy > max_energy or energy < 0:
+            raise ValueError(f"Energy ({energy}) must be between 0 and max_energy ({max_energy})")
+
         self.name = name
         self.player_class = player_class
         self.hp = hp
@@ -20,86 +31,86 @@ class Player:
         self.meat_amount = meat_amount
 
     def take_damage(self, damage):
-        self.hp -= damage
-        if self.hp < 0:
-            self.hp = 0
-
+        if not isinstance(damage, (int, float)) or damage < 0:
+            raise ValueError("Damage must be a non-negative number")
+        self.hp = max(0, self.hp - damage)
 
     def heal(self, amount):
-        self.hp += amount
-        if self.hp > self.max_hp:
-            self.hp = self.max_hp
+        if not isinstance(amount, (int, float)) or amount < 0:
+            raise ValueError("Heal amount must be a non-negative number")
+        self.hp = min(self.max_hp, self.hp + amount)
 
     def format_hp(self):
-        return "{:.2f}".format(self.hp)
+        return Utils.format_float(self.hp)
 
     def take_energy(self, energy):
-        self.energy -= energy
-        if self.energy < 0:
-            self.energy = 0
-
+        if not isinstance(energy, (int, float)) or energy < 0:
+            raise ValueError("Energy must be a non-negative number")
+        self.energy = max(0, self.energy - energy)
 
     def sleep(self, amount):
-        self.energy += amount
-        if self.energy > self.max_energy:
-            self.energy = self.max_energy
+        if not isinstance(amount, (int, float)) or amount < 0:
+            raise ValueError("Sleep amount must be a non-negative number")
+        self.energy = min(self.max_energy, self.energy + amount)
 
     def format_energy(self):
-        return "{:.2f}".format(self.energy)
+        return Utils.format_float(self.energy)
 
     def take_hunger(self, amount):
-        self.hunger -= amount
-        if self.hunger < 0:
-            self.hunger = 0
-
+        if not isinstance(amount, (int, float)) or amount < 0:
+            raise ValueError("Hunger amount must be a non-negative number")
+        self.hunger = max(0, self.hunger - amount)
 
     def eat(self, amount):
-        self.hunger += amount
-        if self.hunger > self.max_hunger:
-            self.hunger = self.max_hunger
+        if not isinstance(amount, (int, float)) or amount < 0:
+            raise ValueError("Eat amount must be a non-negative number")
+        self.hunger = min(self.max_hunger, self.hunger + amount)
 
     def lvl_up_fish(self, amount):
+        if not isinstance(amount, (int, float)) or amount < 0:
+            raise ValueError("Amount must be a non-negative number")
+
         if self.player_class.name == "Fisher":
             amount *= Range(1.01, 1.8).get_random()
 
-        range_to_add = Range(0,0)
-
-        prob = Range(1,2).get_random(as_int=True)
+        prob = Range(1, 2).get_random(as_int=True)
 
         if prob == 1 and self.fish_pull_delay.min + amount < self.fish_pull_delay.max:
-            range_to_add.min += amount
+            self.fish_pull_delay = self.fish_pull_delay.add(Range(amount, 0))
         else:
-            range_to_add.max += amount
-
-        self.fish_pull_delay = self.fish_pull_delay.add(range_to_add)
+            self.fish_pull_delay = self.fish_pull_delay.add(Range(0, amount))
 
     def lvl_up_hunt(self, amount):
+        if not isinstance(amount, (int, float)) or amount < 0:
+            raise ValueError("Amount must be a non-negative number")
+
         if self.player_class.name == "Hunter":
             amount *= Range(1.01, 1.8).get_random()
-
-        range_to_add = Range(0,0)
-
-        prob = Range(1,2).get_random(as_int=True)
-        if prob == 1 and self.hunt_success_rate.min + amount < self.hunt_success_rate.max:
-            if self.hunt_success_rate.min + amount < 1: range_to_add.min += amount
-        else:
-            if self.hunt_success_rate.min + amount < 1: range_to_add.max += amount
-
-        self.hunt_success_rate = self.hunt_success_rate.add(range_to_add)
-
-    def lvl_up_run(self, amount):
-        if self.player_class.name == "Hunter":
-            amount *= Range(1.01, 1.8).get_random()
-
-        range_to_add = Range(0, 0)
 
         prob = Range(1, 2).get_random(as_int=True)
-        if prob == 1 and self.run_success_rate.min + amount < self.run_success_rate.max:
-            if self.run_success_rate.min + amount <= 1: range_to_add.min += amount
-        else:
-            if self.run_success_rate.max + amount <= 1: range_to_add.max += amount
 
-        self.run_success_rate = self.run_success_rate.add(range_to_add)
+        if prob == 1 and self.hunt_success_rate.min + amount < self.hunt_success_rate.max:
+            if self.hunt_success_rate.min + amount < 1:
+                self.hunt_success_rate = self.hunt_success_rate.add(Range(amount, 0))
+        else:
+            if self.hunt_success_rate.max + amount < 1:
+                self.hunt_success_rate = self.hunt_success_rate.add(Range(0, amount))
+
+    def lvl_up_run(self, amount):
+        if not isinstance(amount, (int, float)) or amount < 0:
+            raise ValueError("Amount must be a non-negative number")
+
+        if self.player_class.name == "Hunter":
+            amount *= Range(1.01, 1.8).get_random()
+
+        prob = Range(1, 2).get_random(as_int=True)
+
+        if prob == 1 and self.run_success_rate.min + amount < self.run_success_rate.max:
+            if self.run_success_rate.min + amount <= 1:
+                self.run_success_rate = self.run_success_rate.add(Range(amount, 0))
+        else:
+            if self.run_success_rate.max + amount <= 1:
+                self.run_success_rate = self.run_success_rate.add(Range(0, amount))
 
     def format_hunger(self):
         return Utils.format_float(self.hunger)
@@ -132,10 +143,17 @@ class Player:
 
     @classmethod
     def from_dict(cls, data):
-        from utils.range import Range
+        required_keys = ["name", "player_class", "hp", "max_hp", "hunger", "max_hunger",
+                         "energy", "max_energy", "fish_pull_delay", "hunt_success_rate",
+                         "run_success_rate", "fish_amount", "meat_amount"]
+
+        missing_keys = [key for key in required_keys if key not in data]
+        if missing_keys:
+            raise KeyError(f"Missing required keys: {missing_keys}")
+
         return cls(
             name=data["name"],
-            player_class= PlayerClass.from_dict(data["player_class"]),
+            player_class=PlayerClass.from_dict(data["player_class"]),
             hp=data["hp"],
             max_hp=data["max_hp"],
             hunger=data["hunger"],
@@ -148,4 +166,3 @@ class Player:
             fish_amount=data["fish_amount"],
             meat_amount=data["meat_amount"],
         )
-
