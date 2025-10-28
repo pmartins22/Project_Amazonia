@@ -1,16 +1,18 @@
 from time import sleep
 
 from ascii_art.food_ascii import FoodAscii
-from ascii_art.landscape_ascii import LandScapeAscii
 from game.food.fish import Fish
-from game.food.food import Food
 from game.food.meat import Meat
+from game.game_manager import GameManager
 from utils.range import Range
 from utils.utils import Utils
 
 
 def start_eat(game_manager):
-    while True:
+    if not isinstance(game_manager, GameManager):
+        raise TypeError("game_manager must be an instance of GameManager")
+
+    try:
         Utils.clear_terminal()
 
         game_manager.print_game_status()
@@ -25,35 +27,31 @@ def start_eat(game_manager):
         print("3 : Not yet !")
         Utils.draw_bar(30, "-", corners="*")
         print()
+
         choice = Utils.get_input_int(1, 3, "Enter your choice: ")
 
-        if choice == 3: break
+        if choice == 3:
+            return
 
-        food = None
-        food_amount = 0
-        ascii = ""
-
-        match choice:
-            case 1:
-                food = Meat()
-                food_amount = game_manager.player.meat_amount
-                ascii = FoodAscii.MEAT.value
-
-            case 2:
-                food = Fish()
-                food_amount = game_manager.player.fish_amount
-                ascii = FoodAscii.FISH.value
-
+        if choice == 1:
+            food = Meat()
+            food_amount = game_manager.player.meat_amount
+            ascii_art = FoodAscii.MEAT.value
+        else:
+            food = Fish()
+            food_amount = game_manager.player.fish_amount
+            ascii_art = FoodAscii.FISH.value
 
         if food_amount <= 0:
             print(f"You don't have any {food.name}.")
             sleep(2)
-            continue
+            return
 
-        print(ascii)
+        print(ascii_art)
         print()
 
-        amount = Utils.get_input_int(1, food_amount, "Enter amount: ", out_of_range_msg=f"You don't have that much food (you have {food_amount}).")
+        amount = Utils.get_input_int(1, food_amount, "Enter amount: ",
+                                     out_of_range_msg=f"You don't have that much food (you have {food_amount}).")
 
         print("You are eating...")
         sleep(2)
@@ -64,14 +62,15 @@ def start_eat(game_manager):
         print()
 
         nutrition = food.nutritional_value.get_random()
-
         heal_amount = nutrition * amount * Range(0.85, 0.95).get_random()
 
-        if food.name == "Meat": game_manager.player.meat_amount -= amount
-        if food.name == "Fish": game_manager.player.fish_amount -= amount
+        if food.name == "Meat":
+            game_manager.player.meat_amount -= amount
+        elif food.name == "Fish":
+            game_manager.player.fish_amount -= amount
 
-        print("Nutritional gain: " + Utils.format_float(amount * nutrition))
-        print("HP gain: " + Utils.format_float(heal_amount))
+        print(f"Nutritional gain: {Utils.format_float(amount * nutrition)}")
+        print(f"HP gain: {Utils.format_float(heal_amount)}")
         sleep(2)
         print()
 
@@ -81,3 +80,9 @@ def start_eat(game_manager):
         print()
 
         input("Press [ENTER] to continue...")
+    except (ValueError, TypeError, AttributeError) as e:
+        print(f"Error during eat action: {str(e)}")
+        sleep(2)
+    except Exception as e:
+        print(f"Unexpected error: {str(e)}")
+        sleep(2)
