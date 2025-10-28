@@ -157,6 +157,19 @@ def game_loop(game_manager):
         elif choice == 4:
             start_hunt(game_manager)
         elif choice == 5:
+            if has_save(game_manager.player.name):
+                print("Previous save on this name will be overwritten, are you sure?")
+                print()
+                Utils.draw_bar(20, "-", corners="*")
+                print("1 : Yes")
+                print("2 : No")
+                Utils.draw_bar(20, "-", corners="*")
+                print()
+
+                confirm = Utils.get_input_int(1, 2, "Enter your choice: ")
+                if confirm == 2:
+                    continue
+
             save_game(game_manager)
             print("Game saved successfully!")
             sleep(2)
