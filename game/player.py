@@ -8,13 +8,43 @@ class Player:
                  max_energy=16.0, fish_pull_delay=Range(0.3, 0.4), hunt_success_rate=Range(0.3, 0.4),
                  run_success_rate=Range(0.35, 0.5), fish_amount=0, meat_amount=0):
         if not isinstance(name, str) or not name.strip():
-            raise ValueError("Name must be a non-empty string")
-        if hp > max_hp or hp < 0:
-            raise ValueError(f"HP ({hp}) must be between 0 and max_hp ({max_hp})")
-        if hunger > max_hunger or hunger < 0:
-            raise ValueError(f"Hunger ({hunger}) must be between 0 and max_hunger ({max_hunger})")
-        if energy > max_energy or energy < 0:
-            raise ValueError(f"Energy ({energy}) must be between 0 and max_energy ({max_energy})")
+            raise ValueError("name must be a non-empty string")
+
+        if not isinstance(player_class, PlayerClass):
+            raise ValueError("player_class must be a PlayerClass")
+
+        if not isinstance(hp, (int, float)) or hp < 0:
+            raise ValueError(f"hp must be a non-negative number, got {hp}")
+        if not isinstance(max_hp, (int, float)) or max_hp <= 0:
+            raise ValueError(f"max_hp must be a positive number, got {max_hp}")
+        if hp > max_hp:
+            raise ValueError(f"hp ({hp}) cannot be greater than max_hp ({max_hp})")
+
+        if not isinstance(hunger, (int, float)) or hunger < 0:
+            raise ValueError(f"hunger must be a non-negative number, got {hunger}")
+        if not isinstance(max_hunger, (int, float)) or max_hunger <= 0:
+            raise ValueError(f"max_hunger must be a positive number, got {max_hunger}")
+        if hunger > max_hunger:
+            raise ValueError(f"hunger ({hunger}) cannot be greater than max_hunger ({max_hunger})")
+
+        if not isinstance(energy, (int, float)) or energy < 0:
+            raise ValueError(f"energy must be a non-negative number, got {energy}")
+        if not isinstance(max_energy, (int, float)) or max_energy <= 0:
+            raise ValueError(f"max_energy must be a positive number, got {max_energy}")
+        if energy > max_energy:
+            raise ValueError(f"energy ({energy}) cannot be greater than max_energy ({max_energy})")
+
+        if not isinstance(fish_pull_delay, Range):
+            raise TypeError("fish_pull_delay must be a Range object")
+        if not isinstance(hunt_success_rate, Range):
+            raise TypeError("hunt_success_rate must be a Range object")
+        if not isinstance(run_success_rate, Range):
+            raise TypeError("run_success_rate must be a Range object")
+
+        if not isinstance(fish_amount, int) or fish_amount < 0:
+            raise ValueError(f"fish_amount must be a non-negative integer, got {fish_amount}")
+        if not isinstance(meat_amount, int) or meat_amount < 0:
+            raise ValueError(f"meat_amount must be a non-negative integer, got {meat_amount}")
 
         self.name = name
         self.player_class = player_class
