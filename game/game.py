@@ -184,7 +184,7 @@ def game_loop(game_manager):
                 choice = Utils.get_input_int(1, 2, "Enter your choice: ")
                 match choice:
                     case 1: launch_game()
-                    case 2: break
+                    case 2: pass
 
 
 
