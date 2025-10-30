@@ -34,7 +34,11 @@ This project aims to deepen our knowledge in Python.
    git clone https://github.com/pmartins22/Project_Amazonia.git
    cd Project_Amazonia
    ```
-2. From the terminal, launch the game with the command:
+2. Install the required packages:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. From the terminal, launch the game with the command:
    ```bash
     py main.py
     ```
