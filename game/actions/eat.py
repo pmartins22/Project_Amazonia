@@ -1,3 +1,4 @@
+# This file contains the logic for the eat action in the game.
 from time import sleep
 
 from ascii_art.food_ascii import FoodAscii
@@ -9,6 +10,20 @@ from utils.utils import Utils
 
 
 def start_eat(game_manager):
+    """
+    Manages the eating sequence for the player.
+
+    This function allows the player to consume food (meat or fish) from their inventory. It handles:
+    - The player's choice of food to eat.
+    - Checking if the player has enough of the selected food.
+    - Calculating the nutritional value and health benefits.
+    - Updating the player's stats (health, hunger) and inventory.
+    - Advancing the game time after the action is completed.
+
+    :param game_manager: The main game manager object that holds the game state.
+    :type game_manager: GameManager
+    :raises TypeError: If game_manager is not an instance of GameManager.
+    """
     if not isinstance(game_manager, GameManager):
         raise TypeError("game_manager must be an instance of GameManager")
 

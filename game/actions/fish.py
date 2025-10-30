@@ -1,3 +1,4 @@
+# This file contains the logic for the fish action in the game.
 import time
 from time import sleep
 
@@ -10,6 +11,22 @@ import keyboard
 
 
 def start_fish(game_manager):
+    """
+    Manages the fishing minigame for the player.
+
+    This function initiates a reaction-based minigame where the player must press a key
+    at the right moment to catch a fish. It handles:
+    - The player's choice to start fishing.
+    - A random delay before the fish appears to test the player's reaction.
+    - Checking for early or late key presses.
+    - Awarding fish and experience points upon a successful catch.
+    - Applying a penalty for failure.
+    - Advancing the game time after the action.
+
+    :param game_manager: The main game manager object that holds the game state.
+    :type game_manager: GameManager
+    :raises TypeError: If game_manager is not an instance of GameManager.
+    """
     if not isinstance(game_manager, GameManager):
         raise TypeError("game_manager must be an instance of GameManager")
 

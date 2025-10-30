@@ -1,3 +1,4 @@
+# This file contains the logic for the sleep action in the game.
 from time import sleep
 
 from ascii_art.general_ascii import GeneralAscii
@@ -7,6 +8,21 @@ from utils.utils import Utils
 
 
 def start_sleep(game_manager):
+    """
+    Manages the sleeping action for the player.
+
+    This function allows the player to sleep for a specified number of hours to recover
+    health and energy. It handles:
+    - The player's choice to sleep.
+    - Input for the duration of sleep.
+    - Checking if the player is too hungry to sleep.
+    - Calculating the amount of health and energy restored.
+    - Updating the player's stats and advancing game time accordingly.
+
+    :param game_manager: The main game manager object that holds the game state.
+    :type game_manager: GameManager
+    :raises TypeError: If game_manager is not an instance of GameManager.
+    """
     if not isinstance(game_manager, GameManager):
         raise TypeError("game_manager must be an instance of GameManager")
 

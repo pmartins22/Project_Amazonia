@@ -1,3 +1,4 @@
+# This file contains the logic for the hunt action in the game.
 from time import sleep
 
 from ascii_art.landscape_ascii import LandScapeAscii
@@ -8,6 +9,20 @@ from utils.utils import Utils
 
 
 def start_hunt(game_manager):
+    """
+    Manages the hunting sequence in the game.
+
+    This function guides the player through the process of hunting an animal. It handles:
+    - The player's choice to initiate a hunt.
+    - The random appearance of an animal based on the time of day.
+    - The player's decision to either fight the animal or run away.
+    - The resolution of the chosen action, including calculating success rates,
+      applying damage, awarding meat and experience points, and passing time.
+
+    :param game_manager: The main game manager object that holds the game state.
+    :type game_manager: GameManager
+    :raises TypeError: If game_manager is not an instance of GameManager.
+    """
     if not isinstance(game_manager, GameManager):
         raise TypeError("game_manager must be an instance of GameManager")
 

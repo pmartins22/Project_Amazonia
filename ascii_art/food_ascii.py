@@ -1,3 +1,4 @@
+"""This module defines ASCII art representations of various animals."""
 from enum import Enum, auto
 
 class FoodAscii(Enum):

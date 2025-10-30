@@ -1,3 +1,8 @@
+# This file serves as the main entry point and controller for the game flow.
+# It handles the main menu, player creation, game loading, the primary game loop,
+# and the end-game screen. It orchestrates calls to different modules based on
+# player actions and game state changes.
+
 import sys
 from time import sleep
 
@@ -17,6 +22,13 @@ from utils.utils import Utils
 
 
 def launch_game():
+    """
+    Displays the main menu and directs the game flow.
+
+    This function is the initial entry point of the game. It presents the player
+    with options to start a new game, load a saved game, or quit. Based on the
+    player's choice, it either initiates player creation, loads a game, or exits.
+    """
     Utils.clear_terminal()
     Utils.draw_bar(125, "*", corners="#")
     print("#  Welcome to Project Amazonia! #")
@@ -47,6 +59,16 @@ def launch_game():
 
 
 def create_player():
+    """
+    Manages the player creation process.
+
+    Guides the player through entering a name and choosing a class (Fisher or Hunter).
+    It creates a new Player instance, applies the class-specific buffs, and displays
+    a confirmation screen before returning the new player object.
+
+    :return: The newly created Player instance.
+    :rtype: Player
+    """
     Utils.clear_terminal()
     Utils.draw_bar(125, "*", corners="#")
     print("#  Welcome to Player Creation #")
@@ -87,6 +109,16 @@ def create_player():
 
 
 def load_game_choice():
+    """
+    Manages the game loading process.
+
+    Displays a list of saved player profiles and prompts the user to enter a name
+    to load. It handles user input, validates if a save exists, and loads the
+    corresponding game state. It also allows the user to return to the main menu.
+
+    :return: A GameManager instance loaded from the selected save file.
+    :rtype: GameManager
+    """
     while True:
         Utils.clear_terminal()
         Utils.draw_bar(125, "*", corners="#")
@@ -119,6 +151,17 @@ def load_game_choice():
 
 
 def game_loop(game_manager):
+    """
+    The main loop of the game.
+
+    This function runs continuously, presenting the player with a menu of actions
+    (Eat, Sleep, Fish, Hunt, Save, etc.). It captures the player's choice and
+    calls the appropriate function to handle the action. It also checks for the
+    player's death to trigger the end-game sequence.
+
+    :param game_manager: The main game manager object that holds the game state.
+    :type game_manager: GameManager
+    """
     while True:
         if game_manager.player.hp <= 0:
             end_game(game_manager)
@@ -188,6 +231,15 @@ def game_loop(game_manager):
 
 
 def end_game(game_manager):
+    """
+    Handles the end-game sequence when the player dies.
+
+    Displays a "You Died" screen and offers the player the choice to load a
+    previous game or return to the main menu.
+
+    :param game_manager: The game manager object at the time of player death.
+    :type game_manager: GameManager
+    """
     Utils.clear_terminal()
     Utils.draw_bar(125, "*", corners="#")
     print(GeneralAscii.DEATH.value)

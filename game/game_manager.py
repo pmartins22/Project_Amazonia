@@ -1,3 +1,7 @@
+# This file defines the GameManager class, which acts as the central state
+# manager for the game. It holds the player object, tracks game time, and provides
+# methods for manipulating and displaying the game state.
+
 from game.player import Player
 from utils.day_period import DayPeriod
 from utils.range import Range
@@ -5,7 +9,26 @@ from utils.utils import Utils
 
 
 class GameManager:
+    """
+    Manages the overall game state.
+
+    This class holds the player object, tracks the in-game time and the number of
+    days survived. It provides core functionalities like advancing time, applying
+    status penalties, and printing formatted status information to the console.
+    It also handles its own serialization and deserialization for saving and
+    loading games.
+    """
     def __init__(self, player, time=8.0, days_survived=0):
+        """
+        Initializes a new GameManager instance.
+
+        :param player: The player object for the current game session.
+        :type player: Player
+        :param time: The initial in-game time (0.0 to 23.99).
+        :type time: float
+        :param days_survived: The initial number of days survived.
+        :type days_survived: int
+        """
         if not isinstance(player, Player):
             raise TypeError("Player must be an instance of Player class")
         if not isinstance(time, (int, float)) or time < 0 or time >= 24:
@@ -18,6 +41,22 @@ class GameManager:
         self.days_survived = days_survived
 
     def pass_time(self, time, tax_energy=True, tax_hunger=True):
+        """
+        Advances the game time and applies associated status effects.
+
+        Increments the in-game time, handles day rollovers, and applies penalties
+        to the player's energy and hunger. It also inflicts HP damage if the
+        player's energy or hunger are critically low.
+
+        :param time: The amount of time (in hours) to pass.
+        :type time: float
+        :param tax_energy: If True, reduces player's energy.
+        :type tax_energy: bool
+        :param tax_hunger: If True, reduces player's hunger.
+        :type tax_hunger: bool
+        :return: A formatted string describing the effects of the time passed.
+        :rtype: str
+        """
         if not isinstance(time, (int, float)) or time <= 0:
             raise ValueError("Time must be a positive number")
 
@@ -60,6 +99,14 @@ class GameManager:
         return display
 
     def print_game_status(self, under_bar=False):
+        """
+        Prints the current status of the game world to the console.
+
+        Displays the current time, day period, and days survived in a formatted panel.
+
+        :param under_bar: If True, prints a separator bar at the bottom.
+        :type under_bar: bool
+        """
         Utils.draw_bar(125, "-", "Game Status: ", "*")
         print()
         print(f"                         Time: {self.get_time()}       |       "
@@ -71,6 +118,15 @@ class GameManager:
             print()
 
     def print_player_status(self, under_bar=False):
+        """
+        Prints the current status of the player to the console.
+
+        Displays the player's name, class, core stats (HP, Hunger, Energy), and
+        skill levels in a formatted panel.
+
+        :param under_bar: If True, prints a separator bar at the bottom.
+        :type under_bar: bool
+        """
         Utils.draw_bar(125, "-", f"{self.player.name} ({self.player.player_class.name}) Status: ", "*")
         print()
         print(f"               HP: {self.player.format_hp()} / {int(self.player.max_hp)}          |          "
@@ -86,6 +142,14 @@ class GameManager:
             print()
 
     def print_player_inventory(self, under_bar=False):
+        """
+        Prints the player's inventory to the console.
+
+        Displays the amount of fish and meat the player is carrying.
+
+        :param under_bar: If True, prints a separator bar at the bottom.
+        :type under_bar: bool
+        """
         Utils.draw_bar(125, "-", "Player Inventory: ", "*")
         print()
         print(f"                                   Fish: {self.player.fish_amount}                 |                 "
@@ -96,9 +160,18 @@ class GameManager:
             print()
 
     def get_time(self):
+        """
+        Returns the current in-game time as a formatted string (HH:MM).
+        """
         return Utils.format_time(self.time)
 
     def get_day_period(self):
+        """
+        Determines the current period of the day based on the game time.
+
+        :return: The current DayPeriod enum (DAWN, MORNING, AFTERNOON, or NIGHT).
+        :rtype: DayPeriod
+        """
         if 0 <= self.time < 6:
             return DayPeriod.DAWN
         elif 6 <= self.time < 12:
@@ -109,6 +182,12 @@ class GameManager:
             return DayPeriod.NIGHT
 
     def to_dict(self):
+        """
+        Serializes the GameManager object to a dictionary.
+
+        :return: A dictionary representation of the game's state.
+        :rtype: dict
+        """
         return {
             "player": self.player.to_dict(),
             "time": self.time,
@@ -117,6 +196,15 @@ class GameManager:
 
     @classmethod
     def from_dict(cls, data):
+        """
+        Creates a GameManager instance from a dictionary.
+
+        :param data: The dictionary containing the game's state.
+        :type data: dict
+        :return: A new GameManager instance.
+        :rtype: GameManager
+        :raises KeyError: If required keys are missing from the data.
+        """
         required_keys = ["player", "time", "days_survived"]
         missing_keys = [key for key in required_keys if key not in data]
         if missing_keys:

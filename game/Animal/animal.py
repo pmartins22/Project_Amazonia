@@ -1,11 +1,36 @@
-from abc import ABC, abstractmethod
+# This file defines the abstract base class for all animals in the game.
+from abc import ABC
 
 from utils.range import Range
 from utils.day_period import DayPeriod
 
 
 class Animal(ABC):
+    """
+    An abstract base class for all animals in the game.
+
+    This class provides a common structure for animal objects, including their
+    attributes like damage, success rate taxes for hunting and running, meat drop
+    amount, and ASCII art. It also includes a static method to get a random
+    animal based on the time of day.
+    """
     def __init__(self, name, damage, hunt_success_rate_tax, run_success_rate_tax, meat_drop, ascii_art):
+        """
+        Initializes a new Animal instance.
+
+        :param name: The name of the animal.
+        :type name: str
+        :param damage: The range of damage the animal can inflict.
+        :type damage: Range
+        :param hunt_success_rate_tax: The tax applied to the player's hunt success rate.
+        :type hunt_success_rate_tax: Range
+        :param run_success_rate_tax: The tax applied to the player's run success rate.
+        :type run_success_rate_tax: Range
+        :param meat_drop: The range of meat dropped upon death.
+        :type meat_drop: Range
+        :param ascii_art: The ASCII art representation of the animal.
+        :type ascii_art: str
+        """
         if not isinstance(name, str) or not name.strip():
             raise ValueError("name must be a non-empty string")
         if not isinstance(damage, Range):
@@ -28,6 +53,18 @@ class Animal(ABC):
 
     @staticmethod
     def get_random(day_period: DayPeriod):
+        """
+        Returns a random animal instance based on the time of day.
+
+        The probability of encountering each type of animal changes depending on
+        whether it is dawn, morning, afternoon, or night.
+
+        :param day_period: The current period of the day.
+        :type day_period: DayPeriod
+        :return: An instance of a randomly selected animal class.
+        :rtype: Animal
+        :raises TypeError: If day_period is not a DayPeriod enum.
+        """
         if not isinstance(day_period, DayPeriod):
             raise TypeError("day_period must be a DayPeriod enum")
 

@@ -19,6 +19,7 @@ The game is based on features such as:
 - **Eat** to fill your hunger bar.
 - **Sleep** to recover energy.
 - **Fish** or **Hunt** to obtain food, but beware of bad surprises.
+- **Save** your progress and continue later.
 
 This project aims to deepen our knowledge in Python.
 

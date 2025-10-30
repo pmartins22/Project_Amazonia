@@ -1,14 +1,38 @@
+# This file provides a collection of static utility methods used across the
+# application. These helpers handle common tasks such as terminal manipulation,
+# user input validation, UI drawing, and data formatting.
+
 import os
 import sys
 
 
 class Utils:
+    """
+    A collection of static utility methods for common tasks.
+    """
     @staticmethod
     def clear_terminal():
+        """
+        Clears the console screen.
+
+        Works on both Windows ('cls') and Unix-based systems ('clear').
+        """
         os.system('cls' if os.name == 'nt' else 'clear')
 
     @staticmethod
     def get_input_int(min, max, label="Enter Int: ", out_of_range_msg="Out of range, try again."):
+        """
+        Prompts the user for an integer input within a specified range.
+
+        Continuously prompts until a valid integer is entered.
+
+        :param min: The minimum acceptable value (inclusive).
+        :param max: The maximum acceptable value (inclusive).
+        :param label: The message to display to the user.
+        :param out_of_range_msg: The message to display if the input is out of range.
+        :return: The validated integer input from the user.
+        :rtype: int
+        """
         if min > max:
             raise ValueError(f"min ({min}) cannot be greater than max ({max})")
 
@@ -28,6 +52,17 @@ class Utils:
 
     @staticmethod
     def get_input_str(max, label="Enter Text: ", invalid_enters=[]):
+        """
+        Prompts the user for a non-empty, alphabetic string input.
+
+        Continuously prompts until a valid string is entered.
+
+        :param max: The maximum allowed length of the string.
+        :param label: The message to display to the user.
+        :param invalid_enters: A list of strings that are not allowed as input.
+        :return: The validated string input from the user.
+        :rtype: str
+        """
         if not isinstance(invalid_enters, list) or not all(isinstance(i, str) for i in invalid_enters):
             raise TypeError("invalid_enters must be a list of strings")
 
@@ -50,12 +85,28 @@ class Utils:
 
     @staticmethod
     def clear_lines_above(amount):
+        """
+        Clears a specified number of lines above the current cursor position.
+
+        Uses ANSI escape codes to move the cursor up and clear the line.
+
+        :param amount: The number of lines to clear.
+        :type amount: int
+        """
         for _ in range(amount):
             sys.stdout.write("\033[F\033[K")
         sys.stdout.flush()
 
     @staticmethod
     def draw_bar(size, tile, label="", corners=""):
+        """
+        Prints a decorative bar to the console.
+
+        :param size: The total width of the bar.
+        :param tile: The character used to fill the bar.
+        :param label: An optional label to display within the bar.
+        :param corners: Optional characters to use for the ends of the bar.
+        """
         if size <= 0:
             raise ValueError(f"Size must be positive, got {size}.")
 
@@ -67,6 +118,14 @@ class Utils:
 
     @staticmethod
     def format_time(time):
+        """
+        Formats a float representing hours into a HH:MM string.
+
+        :param time: The time in hours (e.g., 8.5 for 08:30).
+        :type time: float
+        :return: The formatted time string.
+        :rtype: str
+        """
         if not isinstance(time, (int, float)):
             raise TypeError("Time must be a number.")
         if time < 0:
@@ -80,6 +139,14 @@ class Utils:
 
     @staticmethod
     def format_float(value, decimals=2):
+        """
+        Formats a float or int to a string with a specific number of decimal places.
+
+        :param value: The number to format.
+        :param decimals: The number of decimal places to include.
+        :return: The formatted number as a string.
+        :rtype: str
+        """
         if not isinstance(value, (int, float)):
             raise TypeError("Value must be a number.")
         if not isinstance(decimals, int) or decimals < 0:
